@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+// Make sure you are importing the React Button component, not a style function.
+// If "@/components/ui/button" exports a named or default React component, import it accordingly.
+// For example, if it is a default export:
+import { Button } from "@/components/ui/button";
+// Or, if it is a named export and the file exports a React component named "Button":
+// import { Button } from "@/components/ui/button";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -29,14 +36,15 @@ export default function RegisterPage() {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Register</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
+
+        <Input
           type="text"
           placeholder="Name"
           value={name}
           onChange={e => setName(e.target.value)}
           className="w-full border p-2 rounded"
         />
-        <input
+        <Input
           type="email"
           placeholder="Email"
           value={email}
@@ -44,7 +52,7 @@ export default function RegisterPage() {
           className="w-full border p-2 rounded"
           required
         />
-        <input
+        <Input
           type="password"
           placeholder="Password"
           value={password}
@@ -52,7 +60,7 @@ export default function RegisterPage() {
           className="w-full border p-2 rounded"
           required
         />
-        <input
+        <Input
           type="text"
           placeholder="Role"
           value={role}
@@ -61,7 +69,7 @@ export default function RegisterPage() {
           required
         />
         {error && <div className="text-red-500">{error}</div>}
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">Register</button>
+        <Button type="submit" variant="default" size="default">Register</Button>
       </form>
     </div>
   );
