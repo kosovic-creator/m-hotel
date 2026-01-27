@@ -28,7 +28,7 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<S
             <Link className='text-grey-600 hover:text-blue-900' href="/">Nazad na sobe</Link>
             <RoomForm
                 action={updateRoom}
-                initialData={{ ...room }}
+                initialData={{ ...room, id: String(room.id) }}
                 mode="edit"
             />
         </>

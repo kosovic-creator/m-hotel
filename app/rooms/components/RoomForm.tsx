@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-type RoomData = { number: string; type: string; capacity: number; price: number };
+type RoomData = { id?: string; number: string; type: string; capacity: number; price: number };
 
 interface RoomFormProps {
     action: (formData: FormData) => Promise<void>;

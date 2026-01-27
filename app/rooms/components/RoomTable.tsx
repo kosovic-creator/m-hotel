@@ -41,7 +41,7 @@ export default function RoomTable({ rooms }: { rooms: Room[] }) {
                   <Button variant="destructive" size="sm" className="ml-2">Ukloni Sobu</Button>
                 </form>
                 <Link href={`/rooms/edit?roomId=${room.id}`}>
-                  <Button variant="ghost" type="button" className="text-green-600 cursor-pointer">Izmjeni Sobu</Button>
+                  <Button variant="secondary" type="button" >Izmjeni Sobu</Button>
                 </Link>
               </div>
             </TableCell>
