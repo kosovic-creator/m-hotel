@@ -14,6 +14,7 @@ interface RoomFormProps {
 export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
     return (
         <form action={action} className="mb-8 flex gap-4 flex-col max-w-md mt-4">
+            <input type="hidden" name="id" value={initialData?.id ?? ''} />
             <Input
                 name="number"
                 placeholder="Number"

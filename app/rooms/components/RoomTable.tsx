@@ -1,7 +1,11 @@
 'use client';
 
+import { deleteRoom } from "@/actions/room";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Link from "next/link";
+
 
 type Room = {
   id: number;
@@ -31,9 +35,15 @@ export default function RoomTable({ rooms }: { rooms: Room[] }) {
             <TableCell>{room.capacity}</TableCell>
             <TableCell>{room.price}</TableCell>
             <TableCell>
-              {/* Dodaj dugmad za edit i delete */}
-              <Button variant="outline" size="sm">Edit</Button>
-              <Button variant="destructive" size="sm" className="ml-2">Delete</Button>
+              <div className="flex space-x-2 flex-row justify-center">
+                <form action={deleteRoom}>
+                  <Input type="hidden" name="id" value={room.id} />
+                  <Button variant="destructive" size="sm" className="ml-2">Ukloni Sobu</Button>
+                </form>
+                <Link href={`/rooms/edit?roomId=${room.id}`}>
+                  <Button variant="ghost" type="button" className="text-green-600 cursor-pointer">Izmjeni Sobu</Button>
+                </Link>
+              </div>
             </TableCell>
           </TableRow>
         ))}
