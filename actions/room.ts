@@ -1,8 +1,15 @@
+"use server";
 import prisma from '@/lib/prisma';
 
-export const createRoom = async (number: string, type: string, capacity: number, price: number) => {
+
+export const createRoom = async (formData: FormData) => {
+  const number = formData.get('number') as string;
+  const type = formData.get('type') as string;
+  const capacity = Number(formData.get('capacity'));
+  const price = Number(formData.get('price'));
+
   try {
-    const newRoom = await prisma.room.create({
+    await prisma.room.create({
       data: {
         number,
         type,
@@ -10,7 +17,6 @@ export const createRoom = async (number: string, type: string, capacity: number,
         price,
       },
     });
-    return newRoom;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(`Failed to create room: ${error.message}`);
@@ -49,7 +55,7 @@ export const readRoomId = async (roomId: number) => {
   }
 };
 
-export const updateRoom = async (formData: FormData): Promise<{ number?: string; type?: string; capacity?: number; price?: number; } | null> => {
+export const updateRoom = async (id: number, number: string, type: string, capacity: number, price: number, formData: FormData): Promise<{ number?: string; type?: string; capacity?: number; price?: number; } | null> => {
   try {
     const id = Number(formData.get('id'));
     const number = formData.get('number') as string | null;
