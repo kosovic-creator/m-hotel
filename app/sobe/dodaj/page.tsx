@@ -1,5 +1,5 @@
 'use server';
-import React from 'react';
+
 import Link from 'next/link';
 import { dodajSobu } from '@/actions/soba';
 import { getLocaleMessages } from '@/i18n/i18n';

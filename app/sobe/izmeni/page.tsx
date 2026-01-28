@@ -4,12 +4,6 @@ import { ucitajSobuId, azurirajSobu } from '@/actions/soba';
 import { getLocaleMessages } from '@/i18n/i18n';
 import SobaForm from '../components/SobaForm';
 
-
-type SearchParams = {
-    sobaId?: string;
-    lang?: string;
-};
-
 export default async function IdPage({ searchParams }: { searchParams: Promise<{ lang?: string; sobaId?: string }> }) {
     const params = typeof searchParams === 'object' && 'then' in searchParams
         ? await searchParams

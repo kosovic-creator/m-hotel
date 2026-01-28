@@ -1,9 +1,9 @@
 'use client';
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { roomSchema } from "@/app/validation/sobeSchema";
+import { sobaSchema } from "@/app/validation/sobeSchema";
 
 
 type RoomData = { id?: string; broj: string; tip: string; kapacitet: number; cena: number };
@@ -38,7 +38,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             kapacitet: Number(data.kapacitet),
             cena: Number(data.cena)
         };
-        const result = roomSchema.safeParse(parsedData);
+        const result = sobaSchema.safeParse(parsedData);
         if (!result.success) {
             const errors = result.error.flatten().fieldErrors;
             setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
@@ -55,7 +55,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             kapacitet: Number(kapacitet),
             cena: Number(cena)
         };
-        const result = roomSchema.safeParse(parsedData);
+        const result = sobaSchema.safeParse(parsedData);
         if (!result.success) {
             const errors = result.error.flatten().fieldErrors;
             setFieldErrors({
