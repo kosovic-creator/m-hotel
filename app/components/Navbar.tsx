@@ -25,7 +25,11 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white shadow px-6 py-4 flex justify-between items-start">
       <div className="flex flex-col items-start gap-1">
-        <Link href={`/?lang=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
+        <Link href={`/?lang=${i18n.language}`} className="text-xl font-bold"><span className="font-bold text-sm sm:text-base truncate ">
+                  <span className="text-black">⭕️ </span>
+                  <span className="text-black">{'M-HOTEL Admin'.slice(0, 7)}</span>
+                  <span className="text-red-600">{'M-HOTEL Admin'.slice(7)}</span>
+                </span></Link>
         <Button variant="ghost" size="sm" asChild>
           <Link href={`/sobe?lang=${i18n.language}`}>{t("rooms")}</Link>
         </Button>
