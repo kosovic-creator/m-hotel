@@ -10,7 +10,7 @@ type SearchParams = {
     lang?: string;
 };
 
-export default async function IdPage({ searchParams }: { searchParams: Promise<SearchParams> | SearchParams }) {
+export default async function IdPage({ searchParams }: { searchParams: Promise<{ lang?: string; sobaId?: string }> }) {
     const params = typeof searchParams === 'object' && 'then' in searchParams
         ? await searchParams
         : searchParams;
@@ -41,6 +41,7 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<S
                         action={azurirajSobu}
                         initialData={{ ...room, id: String(room.id) }}
                         mode="edit"
+                        lang={lang}
                     />
                 </div>
             </div>

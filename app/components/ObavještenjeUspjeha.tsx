@@ -2,9 +2,10 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface ObavještenjeUspjehaProps {
-  message: string;
+  message: string; // sada je to ključ za prevod
   redirectTo?: string;
   redirectDelay?: number;
   type?: 'success' | 'error' | 'warning' | 'info';
@@ -20,7 +21,7 @@ export default function ObavještenjeUspjeha({
   const [fadeOut, setFadeOut] = React.useState(false);
   const [countdown, setCountdown] = React.useState(Math.floor(redirectDelay / 1000));
   const router = useRouter();
- const [visible, setVisible] = useState(true);
+  const { t } = useTranslation('sobe');
 
   const styles = {
     success: 'text-green-600 bg-green-50 border-green-200',
@@ -69,7 +70,7 @@ export default function ObavještenjeUspjeha({
 
   return (
     <div className={`border rounded-lg p-4 text-center mb-4 transition-opacity duration-500 ${styles[type]} ${fadeOut ? 'opacity-0' : 'opacity-100'}`}>
-      {message}
+      {t(message)}
       {/* {redirectTo && <p className="text-sm mt-2">Preusmjeravanje za {countdown} {countdown === 1 ? 'sekundu' : 'sekundi'}...</p>} */}
     </div>
   );

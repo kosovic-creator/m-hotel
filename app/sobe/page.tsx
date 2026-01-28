@@ -1,5 +1,4 @@
 import { ucitajSobe } from '@/actions/soba';
-
 import ObavještenjeUspjeha from '../components/ObavještenjeUspjeha';
 import { getLocaleMessages } from '@/i18n/i18n';
 import SobeTable from './components/SobeTable';
@@ -10,6 +9,9 @@ export const metadata: Metadata = {
 export default async function SobeStrana({ searchParams }: { searchParams: Promise<{ lang?: string;[key: string]: string | undefined }> }) {
   const sobe = await ucitajSobe();
   const params = await searchParams;
+  // DEBUG: Prikaz svih query parametara
+  // eslint-disable-next-line no-console
+  console.log('SOBE PAGE PARAMS:', params);
   const lang: "en" | "sr" = params?.lang === "sr" ? "sr" : "en";
   const t = getLocaleMessages(lang, 'sobe');
   const successParam = params.success;

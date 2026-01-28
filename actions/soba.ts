@@ -15,55 +15,6 @@ export const ucitajSobe = async () => {
     await prisma.$disconnect();
   }
 }
-
-export async function dodajSobu(formData: FormData) {
-  const broj = formData.get('broj') as string;
-  const tip = formData.get('tip') as string;
-  const kapacitet = Number(formData.get('kapacitet'));
-  const cena = Number(formData.get('cena'));
-  try {
-    await prisma.soba.create({
-      data: { broj, tip, kapacitet, cena },
-    });
-    revalidatePath('/sobe');
-    const params = new URLSearchParams();
-    params.append('success', 'Soba je dodata');
-    redirect(`/sobe?${params.toString()}`);
-  } catch (error) {
-    revalidatePath('/sobe');
-    const params = new URLSearchParams();
-    params.append('error', 'Soba nije dodata');
-    redirect(`/sobe?${params.toString()}`);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-
-export async function obrisiSobu(formData: FormData) {
-  const id = Number(formData.get('id'));
-  try {
-    const soba = await prisma.soba.findUnique({ where: { id } });
-    if (!soba) {
-      throw new Error('Soba nije pronađena');
-    }
-    await prisma.soba.delete({ where: { id } });
-    revalidatePath('/sobe');
-    const params = new URLSearchParams();
-    params.append('success', 'Soba je obrisana');
-    redirect(`/sobe?${params.toString()}`);
-  } catch (error) {
-    revalidatePath('/sobe');
-    const params = new URLSearchParams();
-    params.append('error', 'Soba nije obrisana');
-    redirect(`/sobe?${params.toString()}`);
-  } finally {
-    await prisma.$disconnect();
-  }
-}
-
-
-
 export const ucitajSobuId = async (searchParams: { sobaId: number }) => {
   try {
     const soba = await prisma.soba.findUnique({
@@ -77,49 +28,106 @@ export const ucitajSobuId = async (searchParams: { sobaId: number }) => {
     await prisma.$disconnect();
   }
 };
+export async function dodajSobu(formData: FormData) {
+  const broj = formData.get('broj') as string;
+  const tip = formData.get('tip') as string;
+  const kapacitet = Number(formData.get('kapacitet'));
+  const cena = Number(formData.get('cena'));
+  const lang = (formData.get('lang') as string) || 'sr';
+
+  try {
+    await prisma.soba.create({
+      data: { broj, tip, kapacitet, cena },
+    });
+  } catch (error: any) {
+    revalidatePath('/sobe');
+    const params = new URLSearchParams();
+    if (error.code === 'P2002') {
+      params.append('error', 'exists');
+    } else {
+      params.append('error', 'error');
+    }
+    redirect(`/sobe?${params.toString()}`);
+    return;
+  }
+  revalidatePath('/sobe');
+  const params = new URLSearchParams();
+  params.append('success', 'added');
+  redirect(`/sobe?${params.toString()}`);
+
+}
+
+export async function obrisiSobu(formData: FormData) {
+  const id = Number(formData.get('id'));
+  const lang = (formData.get('lang') as string) || 'sr';
+  try {
+    const soba = await prisma.soba.findUnique({ where: { id } });
+    if (!soba) {
+      throw new Error('notfound');
+    }
+    await prisma.soba.delete({ where: { id } });
+  } catch (error: any) {
+    revalidatePath('/sobe');
+    const params = new URLSearchParams();
+    params.append('error', 'error');
+    redirect(`/sobe?${params.toString()}`);
+    return;
+  }
+  revalidatePath('/sobe');
+  const params = new URLSearchParams();
+  params.append('success', 'deleted');
+  redirect(`/sobe?${params.toString()}`);
+}
 
 export const azurirajSobu = async (formData: FormData) => {
   "use server";
   const id = Number(formData.get('id'));
+
   const broj = formData.get('broj') as string | null;
   const tip = formData.get('tip') as string | null;
   const kapacitet = formData.get('kapacitet') ? Number(formData.get('kapacitet')) : null;
   const cena = formData.get('cena') ? Number(formData.get('cena')) : null;
+  const lang = (formData.get('lang') as string) || 'sr';
 
-  if (!id) {
-    const params = new URLSearchParams();
-    params.append('error', 'ID sobe je obavezan za ažuriranje.');
-    redirect(`/sobe?${params.toString()}`);
-  }
-
+  // Priprema objekta za ažuriranje
   const updatedDetails: { broj?: string; tip?: string; kapacitet?: number; cena?: number } = {};
   if (broj !== null) updatedDetails.broj = broj;
   if (tip !== null) updatedDetails.tip = tip;
   if (kapacitet !== null) updatedDetails.kapacitet = kapacitet;
   if (cena !== null) updatedDetails.cena = cena;
+
   try {
     await prisma.soba.update({
       where: { id },
       data: updatedDetails,
     });
-
+  } catch (error: any) {
+    revalidatePath('/sobe');
+    const params = new URLSearchParams();
+    if (error.code === 'P2002') {
+      params.append('error', 'exists');
+    } else {
+      params.append('error', 'error');
+    }
+    redirect(`/sobe?${params.toString()}`);
+    return;
+  }
   if (tip === null) {
     revalidatePath('/sobe');
     const params = new URLSearchParams();
-    params.append('error', 'Izaberite Tip Sobe');
+    params.append('error', 'error'); // ili poseban ključ za "Izaberite Tip Sobe"
     redirect(`/sobe?${params.toString()}`);
-  } else if (tip.toString().length > 5) {
+    return;
+  } else if (tip.toString().length < 2) {
     revalidatePath('/sobe');
     const params = new URLSearchParams();
-    params.append('error', 'Mora bitimannje od 5 karaktera');
+    params.append('error', 'error'); // ili poseban ključ za "Mora biti više od 2 karaktera"
     redirect(`/sobe?${params.toString()}`);
+    return;
   }
   revalidatePath('/sobe');
   const params = new URLSearchParams();
-  params.append('success', 'Zapis je ažuriran');
+  params.append('success', 'updated');
   redirect(`/sobe?${params.toString()}`);
 
-  } finally {
-    await prisma.$disconnect();
-  }
 };

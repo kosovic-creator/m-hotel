@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,9 +12,10 @@ interface RoomFormProps {
     action: (formData: FormData) => Promise<void>;
     initialData?: Partial<RoomData>;
     mode?: 'add' | 'edit';
+    lang?: string; // dodaj ovo
 }
 
-export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
+export default function RoomForm({ action, initialData, mode, lang }: RoomFormProps) {
     const { t } = useTranslation("sobe");
     const [broj, setBroj] = useState(initialData?.broj ?? "");
     const [tip, setTip] = useState(initialData?.tip ?? "");
@@ -45,7 +46,6 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
             setFieldErrors(prev => ({ ...prev, [field]: undefined }));
         }
     };
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
@@ -78,10 +78,11 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
 
     return (
         <form onSubmit={handleSubmit} className="mb-8 flex gap-4 flex-col max-w-md mt-4 w-full">
+            <input type="hidden" name="lang" value={lang || 'sr'} />
             <input type="hidden" name="id" value={initialData?.id ?? ''} />
             <Input
                 name="broj"
-                placeholder={t("broj")}
+                placeholder={t("number_pl")}
                 required
                 value={broj}
                 onChange={e => setBroj(e.target.value)}
@@ -91,7 +92,7 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
             {fieldErrors.broj && <div className="text-red-500 text-xs pl-1">{fieldErrors.broj}</div>}
             <Input
                 name="tip"
-                placeholder={t("tip")}
+                placeholder={t("type_pl")}
                 required
                 value={tip}
                 onChange={e => setTip(e.target.value)}
@@ -101,7 +102,7 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
             {fieldErrors.tip && <div className="text-red-500 text-xs pl-1">{fieldErrors.tip}</div>}
             <Input
                 name="kapacitet"
-                placeholder={t("kapacitet")}
+                placeholder={t("capacity_pl")}
                 type="number"
                 required
                 value={kapacitet}
@@ -112,7 +113,7 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
             {fieldErrors.kapacitet && <div className="text-red-500 text-xs pl-1">{fieldErrors.kapacitet}</div>}
             <Input
                 name="cena"
-                placeholder={t("cena")}
+                placeholder={t("price_pl")}
                 type="number"
                 required
                 value={cena}

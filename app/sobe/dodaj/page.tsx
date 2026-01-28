@@ -16,7 +16,7 @@ export default async function AddRoomPage({ searchParams }: { searchParams: Prom
           {t.back}
         </Link>
         <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">{t.add}</h1>
-        <SobaForm action={dodajSobu} mode="add" />
+        <SobaForm action={dodajSobu} mode="add" lang={lang} />
       </div>
     </div>
   );

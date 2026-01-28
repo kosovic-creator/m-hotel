@@ -1,11 +1,13 @@
 'use client';
 
 import { obrisiSobu } from "@/actions/soba";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import PotvrdaBrisanjaModal from "./PorvrdaBrisanjaModal";
 
 type Soba = {
   id: number;
@@ -18,6 +20,26 @@ type Soba = {
 export default function SobeTable({ sobe }: { sobe: Soba[] }) {
   const { i18n } = useTranslation();
   const { t } = useTranslation("sobe");
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedId, setSelectedId] = React.useState<number | null>(null);
+  const formRef = React.useRef<HTMLFormElement | null>(null);
+
+  const handleDeleteClick = (id: number) => {
+    setSelectedId(id);
+    setModalOpen(true);
+  };
+  const handleCancel = () => {
+    setModalOpen(false);
+    setSelectedId(null);
+  };
+  const handleConfirm = () => {
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+    setModalOpen(false);
+    setSelectedId(null);
+  };
+
   return (
     <div>
       <div className="mb-4">
@@ -48,9 +70,21 @@ export default function SobeTable({ sobe }: { sobe: Soba[] }) {
                 <TableCell>{soba.cena}</TableCell>
                 <TableCell>
                   <div className="flex space-x-2 flex-row justify-center">
-                    <form action={obrisiSobu}>
+                    <form
+                      action={obrisiSobu}
+                      ref={selectedId === soba.id ? formRef : undefined}
+                    >
                       <Input type="hidden" name="id" value={soba.id} />
-                      <Button variant="destructive" size="sm" className="ml-2">{t("removeRoom")}</Button>
+                      <Input type="hidden" name="lang" value={i18n.language} />
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="ml-2"
+                        type="button"
+                        onClick={() => handleDeleteClick(soba.id)}
+                      >
+                        {t("removeRoom")}
+                      </Button>
                     </form>
                     <Link href={`/sobe/izmeni?sobaId=${soba.id}&lang=${i18n.language}`}>
                       <Button variant="secondary" type="button">{t("editRoom")}</Button>
@@ -94,6 +128,11 @@ export default function SobeTable({ sobe }: { sobe: Soba[] }) {
           </div>
         ))}
       </div>
+      <PotvrdaBrisanjaModal
+        open={modalOpen}
+        onCancel={handleCancel}
+        onConfirm={handleConfirm}
+      />
     </div>
   );
 }
