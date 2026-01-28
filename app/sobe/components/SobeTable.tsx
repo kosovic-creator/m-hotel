@@ -20,44 +20,80 @@ export default function SobeTable({ sobe }: { sobe: Soba[] }) {
   const { t } = useTranslation("sobe");
   return (
     <div>
-      <div className="mb-4 ">
+      <div className="mb-4">
         <Link href="/sobe/dodaj" passHref>
-          <Button asChild variant="default">
+          <Button asChild variant="default" className="w-full sm:w-auto">
             <span>{t("add")}</span>
           </Button>
         </Link>
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>{t("number")}</TableHead>
-            <TableHead>{t("type")}</TableHead>
-            <TableHead>{t("capacity")}</TableHead>
-            <TableHead>{t("price")}</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {sobe.map(soba => (
-            <TableRow key={soba.id}>
-              <TableCell>{soba.broj}</TableCell>
-              <TableCell>{soba.tip}</TableCell>
-              <TableCell>{soba.kapacitet}</TableCell>
-              <TableCell>{soba.cena}</TableCell>
-              <TableCell>
-                <div className="flex space-x-2 flex-row justify-center">
-                  <form action={obrisiSobu}>
-                    <Input type="hidden" name="id" value={soba.id} />
-                    <Button variant="destructive" size="sm" className="ml-2">{t("removeRoom")}</Button>
-                  </form>
-                  <Link href={`/sobe/izmeni?sobaId=${soba.id}&lang=${i18n.language}`}>
-                    <Button variant="secondary" type="button">{t("editRoom")}</Button>
-                  </Link>
-                </div>
-              </TableCell>
+      {/* Desktop table */}
+      <div className="hidden sm:block">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>{t("number")}</TableHead>
+              <TableHead>{t("type")}</TableHead>
+              <TableHead>{t("capacity")}</TableHead>
+              <TableHead>{t("price")}</TableHead>
+              <TableHead></TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {sobe.map(soba => (
+              <TableRow key={soba.id}>
+                <TableCell>{soba.broj}</TableCell>
+                <TableCell>{soba.tip}</TableCell>
+                <TableCell>{soba.kapacitet}</TableCell>
+                <TableCell>{soba.cena}</TableCell>
+                <TableCell>
+                  <div className="flex space-x-2 flex-row justify-center">
+                    <form action={obrisiSobu}>
+                      <Input type="hidden" name="id" value={soba.id} />
+                      <Button variant="destructive" size="sm" className="ml-2">{t("removeRoom")}</Button>
+                    </form>
+                    <Link href={`/sobe/izmeni?sobaId=${soba.id}&lang=${i18n.language}`}>
+                      <Button variant="secondary" type="button">{t("editRoom")}</Button>
+                    </Link>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      {/* Mobile cards */}
+      <div className="flex flex-col gap-4 sm:hidden">
+        {sobe.map(soba => (
+          <div key={soba.id} className="bg-white rounded-lg shadow p-4 flex flex-col gap-2">
+            <div className="flex justify-between">
+              <span className="font-semibold">{t("number")}:</span>
+              <span>{soba.broj}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">{t("type")}:</span>
+              <span>{soba.tip}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">{t("capacity")}:</span>
+              <span>{soba.kapacitet}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-semibold">{t("price")}:</span>
+              <span>{soba.cena}</span>
+            </div>
+            <div className="flex gap-2 mt-2">
+              <form action={obrisiSobu} className="flex-1">
+                <Input type="hidden" name="id" value={soba.id} />
+                <Button variant="destructive" size="sm" className="w-full">{t("removeRoom")}</Button>
+              </form>
+              <Link href={`/sobe/izmeni?sobaId=${soba.id}&lang=${i18n.language}`} className="flex-1">
+                <Button variant="secondary" type="button" className="w-full">{t("editRoom")}</Button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

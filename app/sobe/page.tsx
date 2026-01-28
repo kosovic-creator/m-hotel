@@ -26,9 +26,11 @@ export default async function SobeStrana({ searchParams }: { searchParams: Promi
           <ObavještenjeUspjeha message={errorParam} type="error" />
         )
       }
-      <div className="container mx-auto py-8">
-        <h1 className="text-2xl font-bold mb-4">{t.title}</h1>
-        <SobeTable sobe={sobe || []} />
+      <div className="container mx-auto py-4 px-2 sm:px-4">
+        <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">{t.title}</h1>
+        <div className="overflow-x-auto rounded-md shadow-sm bg-white p-2 sm:p-4">
+          <SobeTable sobe={sobe || []} />
+        </div>
       </div>
     </>
 

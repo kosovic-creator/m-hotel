@@ -31,12 +31,12 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<S
 
     return (
         <>
-            <div className="flex flex-col items-center justify-center min-h-screen">
-                <div className="w-full max-w-md">
-                    <Link className="text-grey-600 hover:text-blue-900" href={`/sobe?lang=${lang}`}>
+            <div className="flex flex-col items-center justify-center min-h-screen px-2 sm:px-0 bg-gray-50">
+                <div className="w-full max-w-md bg-white rounded-lg shadow-md p-4 sm:p-8 mt-8">
+                    <Link className="text-gray-600 hover:text-blue-900 text-sm" href={`/sobe?lang=${lang}`}>
                         {t.back}
                     </Link>
-                    <h1 className="text-2xl font-bold mb-4">{t.edit}</h1>
+                    <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">{t.edit}</h1>
                     <SobaForm
                         action={azurirajSobu}
                         initialData={{ ...room, id: String(room.id) }}

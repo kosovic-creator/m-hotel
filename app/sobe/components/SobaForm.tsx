@@ -77,7 +77,7 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="mb-8 flex gap-4 flex-col max-w-md mt-4">
+        <form onSubmit={handleSubmit} className="mb-8 flex gap-4 flex-col max-w-md mt-4 w-full">
             <input type="hidden" name="id" value={initialData?.id ?? ''} />
             <Input
                 name="broj"
@@ -86,8 +86,9 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
                 value={broj}
                 onChange={e => setBroj(e.target.value)}
                 onBlur={e => validateField("broj", e.target.value)}
+                className="w-full"
             />
-            {fieldErrors.broj && <div className="text-red-500">{fieldErrors.broj}</div>}
+            {fieldErrors.broj && <div className="text-red-500 text-xs pl-1">{fieldErrors.broj}</div>}
             <Input
                 name="tip"
                 placeholder={t("tip")}
@@ -95,8 +96,9 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
                 value={tip}
                 onChange={e => setTip(e.target.value)}
                 onBlur={e => validateField("tip", e.target.value)}
+                className="w-full"
             />
-            {fieldErrors.tip && <div className="text-red-500">{fieldErrors.tip}</div>}
+            {fieldErrors.tip && <div className="text-red-500 text-xs pl-1">{fieldErrors.tip}</div>}
             <Input
                 name="kapacitet"
                 placeholder={t("kapacitet")}
@@ -105,8 +107,9 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
                 value={kapacitet}
                 onChange={e => setKapacitet(e.target.value)}
                 onBlur={e => validateField("kapacitet", e.target.value)}
+                className="w-full"
             />
-            {fieldErrors.kapacitet && <div className="text-red-500">{fieldErrors.kapacitet}</div>}
+            {fieldErrors.kapacitet && <div className="text-red-500 text-xs pl-1">{fieldErrors.kapacitet}</div>}
             <Input
                 name="cena"
                 placeholder={t("cena")}
@@ -115,10 +118,11 @@ export default function RoomForm({ action, initialData, mode }: RoomFormProps) {
                 value={cena}
                 onChange={e => setCena(e.target.value)}
                 onBlur={e => validateField("cena", e.target.value)}
+                className="w-full"
             />
-            {fieldErrors.cena && <div className="text-red-500">{fieldErrors.cena}</div>}
-            {error && <div className="text-red-500">{error}</div>}
-            <Button type="submit" variant="default">
+            {fieldErrors.cena && <div className="text-red-500 text-xs pl-1">{fieldErrors.cena}</div>}
+            {error && <div className="text-red-500 text-xs pl-1">{error}</div>}
+            <Button type="submit" variant="default" className="w-full py-2 text-base">
                 {mode === 'edit' ? t("edit") : t("add")}
             </Button>
         </form>
