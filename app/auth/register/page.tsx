@@ -1,75 +1,81 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-// Make sure you are importing the React Button component, not a style function.
-// If "@/components/ui/button" exports a named or default React component, import it accordingly.
-// For example, if it is a default export:
 import { Button } from "@/components/ui/button";
-// Or, if it is a named export and the file exports a React component named "Button":
-// import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { registerSchema } from "@/app/validation/authSchemas";
 
 export default function RegisterPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const router = useRouter();
+
+  const validateField = (field: "name" | "email" | "password", value: string) => {
+    const result = registerSchema.safeParse({ name, email, password, [field]: value });
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
+    } else {
+      setFieldErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, name, role }),
-    });
-    if (res.ok) router.push("/auth/signin");
-    else {
-      const data = await res.json();
-      setError(data.error || "Registration failed");
+    const result = registerSchema.safeParse({ name, email, password });
+    if (!result.success) {
+      const errors = result.error.flatten().fieldErrors;
+      setFieldErrors({
+        name: errors.name?.[0],
+        email: errors.email?.[0],
+        password: errors.password?.[0],
+      });
+      return;
     }
+    // ...pozovi API za registraciju...
+    router.push("/auth/signin");
   };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Register</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-
         <Input
           type="text"
-          placeholder="Name"
+          placeholder="Ime"
           value={name}
           onChange={e => setName(e.target.value)}
+          onBlur={e => validateField("name", e.target.value)}
           className="w-full border p-2 rounded"
+          required
         />
+        {fieldErrors.name && <div className="text-red-500">{fieldErrors.name}</div>}
         <Input
           type="email"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          onBlur={e => validateField("email", e.target.value)}
           className="w-full border p-2 rounded"
           required
         />
+        {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder="Password"
+          placeholder="Lozinka"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          onBlur={e => validateField("password", e.target.value)}
           className="w-full border p-2 rounded"
           required
         />
-        <Input
-          type="text"
-          placeholder="Role"
-          value={role}
-          onChange={e => setRole(e.target.value)}
-          className="w-full border p-2 rounded"
-          required
-        />
+        {fieldErrors.password && <div className="text-red-500">{fieldErrors.password}</div>}
         {error && <div className="text-red-500">{error}</div>}
-        <Button type="submit" variant="default" size="default">Register</Button>
+        <Button type="submit" variant="default" size="default">Registruj se</Button>
       </form>
     </div>
   );

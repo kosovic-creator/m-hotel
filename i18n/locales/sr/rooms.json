@@ -1,0 +1,8 @@
+{
+  "number": "Broj sobe",
+  "type": "Tip sobe",
+  "capacity": "Kapacitet",
+  "price": "Cena",
+  "add": "Dodaj sobu",
+  "edit": "Izmeni sobu"
+}

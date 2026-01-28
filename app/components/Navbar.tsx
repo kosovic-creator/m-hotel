@@ -9,10 +9,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
+import { useTranslation } from "react-i18next"; // koristi hook, ne direktan import i18n
 
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const { i18n } = useTranslation(); // koristi hook
 
   const handleSignIn = () => router.push("/auth/signin");
   const handleSignOut = () => signOut({ callbackUrl: "/auth/signin" });
@@ -28,9 +30,6 @@ export default function Navbar() {
           <DropdownMenuContent align="start">
             <DropdownMenuItem asChild>
               <Link href="/rooms">Sobe</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/rooms/add">Dodaj sobu</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -48,6 +47,18 @@ export default function Navbar() {
             Prijava
           </Button>
         )}
+        <Button
+          onClick={() => i18n.changeLanguage("en")}
+          className={i18n.language === "en" ? "font-bold underline" : ""}
+        >
+          EN
+        </Button>
+        <Button
+          onClick={() => i18n.changeLanguage("sr")}
+          className={i18n.language === "sr" ? "font-bold underline" : ""}
+        >
+          SR
+        </Button>
       </div>
     </nav>
   );

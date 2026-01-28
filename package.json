@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "i18next": "^25.7.3",
+    "react-i18next": "^15.7.4",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",

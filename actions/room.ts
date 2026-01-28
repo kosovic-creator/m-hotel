@@ -100,15 +100,23 @@ export const updateRoom = async (formData: FormData) => {
       where: { id },
       data: updatedDetails,
     });
+
+  if (type === null) {
     revalidatePath('/rooms');
     const params = new URLSearchParams();
-    params.append('success', 'Soba je ažurirana');
+    params.append('error', 'Izaberite Tip Sobe');
     redirect(`/rooms?${params.toString()}`);
-  // } catch (error) {
-  //   revalidatePath('/rooms');
-  //   const params = new URLSearchParams();
-  //   params.append('error', 'Soba nije uspješno ažurirana');
-  //   redirect(`/rooms?${params.toString()}`);
+  } else if (type.toString().length > 5) {
+    revalidatePath('/rooms');
+    const params = new URLSearchParams();
+    params.append('error', 'Mora bitimannje od 5 karaktera');
+    redirect(`/rooms?${params.toString()}`);
+  }
+  revalidatePath('/rooms');
+  const params = new URLSearchParams();
+  params.append('success', 'Zapis je ažuriran');
+  redirect(`/rooms?${params.toString()}`);
+
   } finally {
     await prisma.$disconnect();
   }

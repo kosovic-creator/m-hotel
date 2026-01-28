@@ -1,0 +1,8 @@
+{
+  "number": "Room Number",
+  "type": "Room Type",
+  "capacity": "Capacity",
+  "price": "Price",
+  "add": "Add Room",
+  "edit": "Edit Room"
+}
