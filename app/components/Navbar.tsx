@@ -9,27 +9,27 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu";
-import { useTranslation } from "react-i18next"; // koristi hook, ne direktan import i18n
+import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
-  const { i18n } = useTranslation(); // koristi hook
+  const { i18n } = useTranslation();
 
-  const handleSignIn = () => router.push("/auth/signin");
-  const handleSignOut = () => signOut({ callbackUrl: "/auth/signin" });
+  const handleSignIn = () => router.push(`/auth/signin?locale=${i18n.language}`);
+  const handleSignOut = () => signOut({ callbackUrl: `/auth/signin?locale=${i18n.language}` });
 
   return (
     <nav className="w-full bg-white shadow px-6 py-4 flex justify-between items-start">
       <div className="flex flex-col items-start gap-1">
-        <Link href="/" className="text-xl font-bold">M-HOTEL Admin</Link>
+        <Link href={`/?locale=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">Sobe</Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuItem asChild>
-              <Link href="/rooms">Sobe</Link>
+              <Link href={`/rooms?locale=${i18n.language}`}>Sobe</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -48,13 +48,19 @@ export default function Navbar() {
           </Button>
         )}
         <Button
-          onClick={() => i18n.changeLanguage("en")}
+          onClick={() => {
+            i18n.changeLanguage("en");
+            router.push(`?locale=en`);
+          }}
           className={i18n.language === "en" ? "font-bold underline" : ""}
         >
           EN
         </Button>
         <Button
-          onClick={() => i18n.changeLanguage("sr")}
+          onClick={() => {
+            i18n.changeLanguage("sr");
+            router.push(`?locale=sr`);
+          }}
           className={i18n.language === "sr" ? "font-bold underline" : ""}
         >
           SR
