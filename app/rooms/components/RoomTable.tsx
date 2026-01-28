@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 type Room = {
   id: number;
@@ -15,6 +16,8 @@ type Room = {
 };
 
 export default function RoomTable({ rooms }: { rooms: Room[] }) {
+  const { i18n } = useTranslation();
+
   return (
     <div>
       <div className="mb-4 ">
@@ -47,8 +50,8 @@ export default function RoomTable({ rooms }: { rooms: Room[] }) {
                     <Input type="hidden" name="id" value={room.id} />
                     <Button variant="destructive" size="sm" className="ml-2">Ukloni Sobu</Button>
                   </form>
-                  <Link href={`/rooms/edit?roomId=${room.id}`}>
-                    <Button variant="secondary" type="button" >Izmjeni Sobu</Button>
+                  <Link href={`/rooms/edit?roomId=${room.id}&locale=${i18n.language}`}>
+                    <Button variant="secondary" type="button">Izmjeni Sobu</Button>
                   </Link>
                 </div>
               </TableCell>

@@ -1,20 +1,23 @@
 "use client";
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem
-} from "@/components/ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const { i18n } = useTranslation();
+
+  const handleChangeLanguage = (lng: "en" | "sr") => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("locale", lng);
+    router.push(`${pathname}?${params.toString()}`);
+    i18n.changeLanguage(lng);
+  };
 
   const handleSignIn = () => router.push(`/auth/signin?locale=${i18n.language}`);
   const handleSignOut = () => signOut({ callbackUrl: `/auth/signin?locale=${i18n.language}` });
@@ -23,7 +26,7 @@ export default function Navbar() {
     <nav className="w-full bg-white shadow px-6 py-4 flex justify-between items-start">
       <div className="flex flex-col items-start gap-1">
         <Link href={`/?locale=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm">Sobe</Button>
           </DropdownMenuTrigger>
@@ -32,7 +35,11 @@ export default function Navbar() {
               <Link href={`/rooms?locale=${i18n.language}`}>Sobe</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
+
+        <Button variant="ghost" size="sm" asChild>
+          <Link href={`/rooms?locale=${i18n.language}`}>Sobe</Link>
+        </Button>
       </div>
       <div className="flex items-center gap-4">
         {session?.user ? (
@@ -48,19 +55,13 @@ export default function Navbar() {
           </Button>
         )}
         <Button
-          onClick={() => {
-            i18n.changeLanguage("en");
-            router.push(`?locale=en`);
-          }}
+          onClick={() => handleChangeLanguage("en")}
           className={i18n.language === "en" ? "font-bold underline" : ""}
         >
           EN
         </Button>
         <Button
-          onClick={() => {
-            i18n.changeLanguage("sr");
-            router.push(`?locale=sr`);
-          }}
+          onClick={() => handleChangeLanguage("sr")}
           className={i18n.language === "sr" ? "font-bold underline" : ""}
         >
           SR
