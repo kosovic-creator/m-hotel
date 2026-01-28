@@ -4,5 +4,14 @@
   "capacity": "Capacity",
   "price": "Price",
   "add": "Add Room",
-  "edit": "Edit Room"
+  "edit": "Edit Room",
+  "title": "Rooms",
+  "back": "Back to Rooms",
+  "notfound": "No rooms found.",
+  "success_add": "Room added successfully.",
+  "success_edit": "Room updated successfully.",
+  "delete_confirm": "Are you sure you want to delete this room?",
+  "delete_success": "Room deleted successfully.",
+  "removeRoom": "Remove Room",
+  "editRoom": "Edit Room"
 }

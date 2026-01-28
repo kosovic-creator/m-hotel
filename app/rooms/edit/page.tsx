@@ -1,23 +1,12 @@
 import Link from 'next/link'
 import RoomForm from '../components/RoomForm';
 import { readRoomId, updateRoom } from '@/actions/room';
+import { getLocaleMessages } from '@/i18n/i18n';
+
 
 type SearchParams = {
     roomId?: string;
-    locale?: string;
-};
-
-const translations = {
-    en: {
-        back: "Back to rooms",
-        invalid: "Invalid ID parameter.",
-        notfound: "Room not found."
-    },
-    sr: {
-        back: "Nazad na sobe",
-        invalid: "Neispravan ID parametar.",
-        notfound: "Podatak nije pronađen."
-    }
+    lang?: string;
 };
 
 export default async function IdPage({ searchParams }: { searchParams: Promise<SearchParams> | SearchParams }) {
@@ -25,29 +14,35 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<S
         ? await searchParams
         : searchParams;
 
-    const locale: "en" | "sr" = params.locale === "sr" ? "sr" : "en";
+    const lang: "en" | "sr" = params.lang === "sr" ? "sr" : "en";
+    const t = getLocaleMessages(lang, 'rooms');
     const id = Number(params.roomId);
 
     if (!params.roomId || isNaN(id)) {
-        return <div>{translations[locale].invalid}</div>;
+        return <div>{t("invalid")}</div>;
     }
 
     const room = await readRoomId({ roomId: id });
 
     if (!room) {
-        return <div>{translations[locale].notfound}</div>;
+        return <div>{t("notfound")}</div>;
     }
 
     return (
         <>
-            <Link className='text-grey-600 hover:text-blue-900' href={`/?locale=${locale}`}>
-                {translations[locale].back}
-            </Link>
-            <RoomForm
-                action={updateRoom}
-                initialData={{ ...room, id: String(room.id) }}
-                mode="edit"
-            />
+            <div className="flex flex-col items-center justify-center min-h-screen">
+                <div className="w-full max-w-md">
+                    <Link className="text-grey-600 hover:text-blue-900" href={`/rooms?lang=${lang}`}>
+                        {t.back}
+                    </Link>
+                    <h1 className="text-2xl font-bold mb-4">{t.edit}</h1>
+                    <RoomForm
+                        action={updateRoom}
+                        initialData={{ ...room, id: String(room.id) }}
+                        mode="edit"
+                    />
+                </div>
+            </div>
         </>
     );
 }

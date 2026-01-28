@@ -9,17 +9,21 @@ import srCommon from './locales/sr/common.json';
 import srAuth from './locales/sr/auth.json';
 import enRooms from './locales/en/rooms.json';
 import srRooms from './locales/sr/rooms.json';
+import srNavbar from './locales/sr/navbar.json';
+import enNavbar from './locales/en/navbar.json';
 
 const resources = {
   en: {
     common: enCommon,
     auth: enAuth,
     rooms: enRooms,
+    navbar: enNavbar,
   },
   sr: {
     common: srCommon,
     auth: srAuth,
     rooms: srRooms,
+    navbar: srNavbar,
   },
 };
 
@@ -30,7 +34,7 @@ if (!i18n.isInitialized) {
       fallbackLng: 'en',
       supportedLngs: ['en', 'sr'],
       debug: process.env.NODE_ENV === 'development',
-      ns: ['common', 'auth', 'rooms'],
+      ns: ['common', 'auth', 'rooms', 'navbar'],
       defaultNS: 'common',
       resources,
       backend: false, // onemogući backend loader i na klijentu

@@ -4,5 +4,14 @@
   "capacity": "Kapacitet",
   "price": "Cena",
   "add": "Dodaj sobu",
-  "edit": "Izmeni sobu"
+  "edit": "Izmeni sobu",
+  "title": "Sobe",
+  "back": "Nazad na sobe",
+  "notfound": "Nema pronađenih soba.",
+  "success_add": "Soba je uspešno dodata.",
+  "success_edit": "Soba je uspešno izmenjena.",
+  "delete_confirm": "Da li ste sigurni da želite da obrišete ovu sobu?",
+  "delete_success": "Soba je uspešno obrisana.",
+  "removeRoom": "Ukloni Sobu",
+  "editRoom": "Izmeni Sobu"
 }

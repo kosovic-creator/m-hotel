@@ -17,24 +17,23 @@ type Room = {
 
 export default function RoomTable({ rooms }: { rooms: Room[] }) {
   const { i18n } = useTranslation();
-
+  const { t } = useTranslation("rooms");
   return (
     <div>
       <div className="mb-4 ">
         <Link href="/rooms/add" passHref>
           <Button asChild variant="default">
-            <span>Add</span>
+            <span>{t("add")}</span>
           </Button>
         </Link>
       </div>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Number</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Capacity</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead>{t("number")}</TableHead>
+            <TableHead>{t("type")}</TableHead>
+            <TableHead>{t("capacity")}</TableHead>
+            <TableHead>{t("price")}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -48,10 +47,10 @@ export default function RoomTable({ rooms }: { rooms: Room[] }) {
                 <div className="flex space-x-2 flex-row justify-center">
                   <form action={deleteRoom}>
                     <Input type="hidden" name="id" value={room.id} />
-                    <Button variant="destructive" size="sm" className="ml-2">Ukloni Sobu</Button>
+                    <Button variant="destructive" size="sm" className="ml-2">{t("removeRoom")}</Button>
                   </form>
-                  <Link href={`/rooms/edit?roomId=${room.id}&locale=${i18n.language}`}>
-                    <Button variant="secondary" type="button">Izmjeni Sobu</Button>
+                  <Link href={`/rooms/edit?roomId=${room.id}&lang=${i18n.language}`}>
+                    <Button variant="secondary" type="button">{t("editRoom")}</Button>
                   </Link>
                 </div>
               </TableCell>

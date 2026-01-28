@@ -3,28 +3,21 @@ import React from 'react';
 import Link from 'next/link';
 import { createRoom } from '@/actions/room';
 import RoomForm from '../components/RoomForm';
+import { getLocaleMessages } from '@/i18n/i18n';
 
-const translations = {
-  en: {
-    back: "Back to rooms",
-    title: "Add Room"
-  },
-  sr: {
-    back: "Nazad na sobe",
-    title: "Dodaj sobu"
-  }
-};
-
-export default async function AddRoomPage({ searchParams }: { searchParams: Promise<{ locale?: string }> }) {
+export default async function AddRoomPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const params = await searchParams;
-  const locale: "en" | "sr" = params?.locale === "sr" ? "sr" : "en";
+  const lang: "en" | "sr" = params?.lang === "sr" ? "sr" : "en";
+  const t = getLocaleMessages(lang, 'rooms');
   return (
-    <div className="container mx-auto py-8">
-      <Link className="text-grey-600 hover:text-blue-900" href={`/rooms?locale=${locale}`}>
-        {translations[locale].back}
-      </Link>
-      <h1 className="text-2xl font-bold mb-4">{translations[locale].title}</h1>
-      <RoomForm action={createRoom} mode="add" />
+    <div className="flex flex-col items-center justify-center min-h-screen">
+      <div className="w-full max-w-md">
+        <Link className="text-grey-600 hover:text-blue-900" href={`/rooms?lang=${lang}`}>
+          {t.back}
+        </Link>
+        <h1 className="text-2xl font-bold mb-4">{t.add}</h1>
+        <RoomForm action={createRoom} mode="add" />
+      </div>
     </div>
   );
 }

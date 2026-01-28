@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/app/validation/authSchemas";
+import { useTranslation } from "react-i18next";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ export default function SignInPage() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
   const router = useRouter();
+ const { t } = useTranslation("auth");
 
   const validateField = (field: "email" | "password", value: string) => {
     const result = loginSchema.safeParse({ email, password, [field]: value });
@@ -46,11 +48,11 @@ export default function SignInPage() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Sign In</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("login.title")}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="email"
-          placeholder="Email"
+          placeholder={t("login.email")}
           value={email}
           onChange={e => setEmail(e.target.value)}
           onBlur={e => validateField("email", e.target.value)}
@@ -60,7 +62,7 @@ export default function SignInPage() {
         {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder="Password"
+          placeholder={t("login.password")}
           value={password}
           onChange={e => setPassword(e.target.value)}
           onBlur={e => validateField("password", e.target.value)}
@@ -69,7 +71,7 @@ export default function SignInPage() {
         />
         {fieldErrors.password && <div className="text-red-500">{fieldErrors.password}</div>}
         {error && <div className="text-red-500">{error}</div>}
-        <Button type="submit" variant="default" size="default">Sign In</Button>
+        <Button type="submit" variant="default" size="default">{t("login.submit")}</Button>
       </form>
     </div>
   );

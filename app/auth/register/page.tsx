@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { registerSchema } from "@/app/validation/authSchemas";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const router = useRouter();
-
+  const { t } = useTranslation("auth");
   const validateField = (field: "name" | "email" | "password", value: string) => {
     const result = registerSchema.safeParse({ name, email, password, [field]: value });
     if (!result.success) {
@@ -42,11 +43,11 @@ export default function RegisterPage() {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
+      <h2 className="text-2xl font-bold mb-4">{t("register.register")}</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           type="text"
-          placeholder="Ime"
+          placeholder={t("register.name")}
           value={name}
           onChange={e => setName(e.target.value)}
           onBlur={e => validateField("name", e.target.value)}
@@ -56,7 +57,7 @@ export default function RegisterPage() {
         {fieldErrors.name && <div className="text-red-500">{fieldErrors.name}</div>}
         <Input
           type="email"
-          placeholder="Email"
+          placeholder={t("register.email")}
           value={email}
           onChange={e => setEmail(e.target.value)}
           onBlur={e => validateField("email", e.target.value)}
@@ -66,7 +67,7 @@ export default function RegisterPage() {
         {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder="Lozinka"
+          placeholder={t("register.password")}
           value={password}
           onChange={e => setPassword(e.target.value)}
           onBlur={e => validateField("password", e.target.value)}
@@ -75,7 +76,7 @@ export default function RegisterPage() {
         />
         {fieldErrors.password && <div className="text-red-500">{fieldErrors.password}</div>}
         {error && <div className="text-red-500">{error}</div>}
-        <Button type="submit" variant="default" size="default">Registruj se</Button>
+        <Button type="submit" variant="default" size="default">{t("register.submit")}</Button>
       </form>
     </div>
   );

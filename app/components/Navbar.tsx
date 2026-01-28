@@ -10,35 +10,24 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation("navbar"); 
 
   const handleChangeLanguage = (lng: "en" | "sr") => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set("locale", lng);
+    params.set("lang", lng); // koristi "lang" svuda
     router.push(`${pathname}?${params.toString()}`);
     i18n.changeLanguage(lng);
   };
 
-  const handleSignIn = () => router.push(`/auth/signin?locale=${i18n.language}`);
-  const handleSignOut = () => signOut({ callbackUrl: `/auth/signin?locale=${i18n.language}` });
+  const handleSignIn = () => router.push(`/auth/signin?lang=${i18n.language}`);
+  const handleSignOut = () => signOut({ callbackUrl: `/auth/signin?lang=${i18n.language}` });
 
   return (
     <nav className="w-full bg-white shadow px-6 py-4 flex justify-between items-start">
       <div className="flex flex-col items-start gap-1">
-        <Link href={`/?locale=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm">Sobe</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem asChild>
-              <Link href={`/rooms?locale=${i18n.language}`}>Sobe</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-
+        <Link href={`/?lang=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/rooms?locale=${i18n.language}`}>Sobe</Link>
+          <Link href={`/rooms?lang=${i18n.language}`}>{t("rooms")}</Link>
         </Button>
       </div>
       <div className="flex items-center gap-4">
@@ -46,12 +35,12 @@ export default function Navbar() {
           <>
             <span className="text-gray-700">{session.user.name || session.user.email}</span>
             <Button variant="outline" onClick={handleSignOut}>
-              Odjava
+              {t("logout")}
             </Button>
           </>
         ) : (
           <Button variant="default" onClick={handleSignIn}>
-            Prijava
+              {t("login")}
           </Button>
         )}
         <Button
