@@ -2,8 +2,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { dodajSobu } from '@/actions/soba';
-import RoomForm from '../components/RoomForm';
 import { getLocaleMessages } from '@/i18n/i18n';
+import SobaForm from '../components/SobaForm';
 
 export default async function AddRoomPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   const params = await searchParams;
@@ -16,7 +16,7 @@ export default async function AddRoomPage({ searchParams }: { searchParams: Prom
           {t.back}
         </Link>
         <h1 className="text-2xl font-bold mb-4">{t.add}</h1>
-        <RoomForm action={dodajSobu} mode="add" />
+        <SobaForm action={dodajSobu} mode="add" />
       </div>
     </div>
   );

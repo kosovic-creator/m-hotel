@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import RoomForm from '../components/RoomForm';
+
 import { ucitajSobuId, azurirajSobu } from '@/actions/soba';
 import { getLocaleMessages } from '@/i18n/i18n';
+import SobaForm from '../components/SobaForm';
 
 
 type SearchParams = {
@@ -36,7 +37,7 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<S
                         {t.back}
                     </Link>
                     <h1 className="text-2xl font-bold mb-4">{t.edit}</h1>
-                    <RoomForm
+                    <SobaForm
                         action={azurirajSobu}
                         initialData={{ ...room, id: String(room.id) }}
                         mode="edit"

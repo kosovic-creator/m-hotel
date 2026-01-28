@@ -15,7 +15,7 @@ type Soba = {
   cena: number;
 };
 
-export default function RoomTable({ sobe }: { sobe: Soba[] }) {
+export default function SobeTable({ sobe }: { sobe: Soba[] }) {
   const { i18n } = useTranslation();
   const { t } = useTranslation("sobe");
   return (

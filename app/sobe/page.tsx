@@ -1,7 +1,8 @@
 import { ucitajSobe } from '@/actions/soba';
-import RoomTable from './components/RoomTable'
+
 import SuccessMessage from '../components/SuccessMessage';
 import { getLocaleMessages } from '@/i18n/i18n';
+import SobeTable from './components/SobeTable';
 
 export default async function SobeStrana({ searchParams }: { searchParams: Promise<{ lang?: string;[key: string]: string | undefined }> }) {
   const sobe = await ucitajSobe();
@@ -23,7 +24,7 @@ export default async function SobeStrana({ searchParams }: { searchParams: Promi
       }
       <div className="container mx-auto py-8">
         <h1 className="text-2xl font-bold mb-4">{t.title}</h1>
-        <RoomTable sobe={sobe || []} />
+        <SobeTable sobe={sobe || []} />
       </div>
     </>
 
