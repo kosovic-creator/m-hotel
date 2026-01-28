@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { roomSchema } from "@/app/validation/roomsSchema";
+import { roomSchema } from "@/app/validation/sobeSchema";
 
 
 type RoomData = { id?: string; broj: string; tip: string; kapacitet: number; cena: number };

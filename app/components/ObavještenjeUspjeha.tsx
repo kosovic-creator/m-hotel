@@ -3,30 +3,30 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-interface SuccessMessageProps {
+interface ObavještenjeUspjehaProps {
   message: string;
   redirectTo?: string;
   redirectDelay?: number;
   type?: 'success' | 'error' | 'warning' | 'info';
 }
 
-export default function SuccessMessage({
+export default function ObavještenjeUspjeha({
   message,
   redirectTo,
   redirectDelay = 3000,
   type = 'success'
-}: SuccessMessageProps) {
+}: ObavještenjeUspjehaProps) {
   const [show, setShow] = React.useState(true);
   const [fadeOut, setFadeOut] = React.useState(false);
   const [countdown, setCountdown] = React.useState(Math.floor(redirectDelay / 1000));
   const router = useRouter();
  const [visible, setVisible] = useState(true);
- 
+
   const styles = {
     success: 'text-green-600 bg-green-50 border-green-200',
     error: 'text-red-600 bg-red-50 border-red-200',
     warning: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-    info: 'text-grey-600 bg-blue-50 border-blue-200',
+    info: 'text-gray-600 bg-blue-50 border-blue-200',
   };
 
   React.useEffect(() => {

@@ -1,6 +1,6 @@
 import { ucitajSobe } from '@/actions/soba';
 
-import SuccessMessage from '../components/SuccessMessage';
+import ObavještenjeUspjeha from '../components/ObavještenjeUspjeha';
 import { getLocaleMessages } from '@/i18n/i18n';
 import SobeTable from './components/SobeTable';
 
@@ -14,12 +14,12 @@ export default async function SobeStrana({ searchParams }: { searchParams: Promi
   return (
     <>
       {successParam && (
-        <SuccessMessage message={successParam} type="success" />
+        <ObavještenjeUspjeha message={successParam} type="success" />
       )}
 
       {
         errorParam && (
-          <SuccessMessage message={errorParam} type="error" />
+          <ObavještenjeUspjeha message={errorParam} type="error" />
         )
       }
       <div className="container mx-auto py-8">
