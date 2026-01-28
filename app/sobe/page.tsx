@@ -3,7 +3,10 @@ import { ucitajSobe } from '@/actions/soba';
 import ObavještenjeUspjeha from '../components/ObavještenjeUspjeha';
 import { getLocaleMessages } from '@/i18n/i18n';
 import SobeTable from './components/SobeTable';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Sobe'
+};
 export default async function SobeStrana({ searchParams }: { searchParams: Promise<{ lang?: string;[key: string]: string | undefined }> }) {
   const sobe = await ucitajSobe();
   const params = await searchParams;
@@ -11,6 +14,7 @@ export default async function SobeStrana({ searchParams }: { searchParams: Promi
   const t = getLocaleMessages(lang, 'sobe');
   const successParam = params.success;
   const errorParam = params.error;
+
   return (
     <>
       {successParam && (
