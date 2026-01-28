@@ -1,4 +1,4 @@
-import NextAuth, { SessionStrategy } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from '../../../../lib/prisma';
@@ -11,21 +11,24 @@ export const authOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        lozinka: { label: "Lozinka", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
-        const user = await prisma.user.findUnique({ where: { email: credentials.email } });
-        if (!user || !user.password) return null;
-        const isValid = await bcrypt.compare(credentials.password, user.password);
+        console.log("Pristigle kredencijale:", credentials);
+        if (!credentials?.email || !credentials?.lozinka) return null;
+        const korisnik = await prisma.korisnik.findUnique({ where: { email: credentials.email } });
+        console.log("Pronađen korisnik:", korisnik);
+        if (!korisnik || !korisnik.lozinka) return null;
+        const isValid = await bcrypt.compare(credentials.lozinka, korisnik.lozinka);
+        console.log("Validnost lozinke:", isValid);
         if (!isValid) return null;
-        return { id: String(user.id), email: user.email, name: user.name, role: user.role };
+        return { id: String(korisnik.id), email: korisnik.email, name: korisnik.ime, uloga: korisnik.uloga };
       },
     }),
   ],
   session: { strategy: "jwt" as const },
   pages: {
-    signIn: "/auth/signin",
+    signIn: "/auth/prijava",
     error: "/auth/error",
   },
   secret: process.env.NEXTAUTH_SECRET,

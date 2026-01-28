@@ -10,7 +10,7 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { t, i18n } = useTranslation("navbar"); 
+  const { t, i18n } = useTranslation("navbar");
 
   const handleChangeLanguage = (lng: "en" | "sr") => {
     const params = new URLSearchParams(searchParams.toString());
@@ -19,15 +19,15 @@ export default function Navbar() {
     i18n.changeLanguage(lng);
   };
 
-  const handleSignIn = () => router.push(`/auth/signin?lang=${i18n.language}`);
-  const handleSignOut = () => signOut({ callbackUrl: `/auth/signin?lang=${i18n.language}` });
+  const handleprijava = () => router.push(`/auth/prijava?lang=${i18n.language}`);
+  const handleSignOut = () => signOut({ callbackUrl: `/auth/prijava?lang=${i18n.language}` });
 
   return (
     <nav className="w-full bg-white shadow px-6 py-4 flex justify-between items-start">
       <div className="flex flex-col items-start gap-1">
         <Link href={`/?lang=${i18n.language}`} className="text-xl font-bold">M-HOTEL Admin</Link>
         <Button variant="ghost" size="sm" asChild>
-          <Link href={`/rooms?lang=${i18n.language}`}>{t("rooms")}</Link>
+          <Link href={`/sobe?lang=${i18n.language}`}>{t("rooms")}</Link>
         </Button>
       </div>
       <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ export default function Navbar() {
             </Button>
           </>
         ) : (
-          <Button variant="default" onClick={handleSignIn}>
+          <Button variant="default" onClick={handleprijava}>
               {t("login")}
           </Button>
         )}

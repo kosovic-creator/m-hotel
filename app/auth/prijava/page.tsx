@@ -9,14 +9,14 @@ import { useTranslation } from "react-i18next";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [lozinka, setLozinka] = useState("");
   const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; lozinka?: string }>({});
   const router = useRouter();
  const { t } = useTranslation("auth");
 
-  const validateField = (field: "email" | "password", value: string) => {
-    const result = loginSchema.safeParse({ email, password, [field]: value });
+  const validateField = (field: "email" | "lozinka", value: string) => {
+    const result = loginSchema.safeParse({ email, lozinka, [field]: value });
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;
       setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
@@ -28,18 +28,18 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = loginSchema.safeParse({ email, password });
+    const result = loginSchema.safeParse({ email, lozinka });
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;
       setFieldErrors({
         email: errors.email?.[0],
-        password: errors.password?.[0],
+        lozinka: errors.lozinka?.[0],
       });
       return;
     }
     const res = await signIn("credentials", {
       email,
-      password,
+      lozinka,
       redirect: false,
     });
     if (res?.error) setError(res.error);
@@ -62,14 +62,14 @@ export default function SignInPage() {
         {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder={t("login.password")}
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          onBlur={e => validateField("password", e.target.value)}
+          placeholder={t("login.lozinka")}
+          value={lozinka}
+          onChange={e => setLozinka(e.target.value)}
+          onBlur={e => validateField("lozinka", e.target.value)}
           className="w-full border p-2 rounded"
           required
         />
-        {fieldErrors.password && <div className="text-red-500">{fieldErrors.password}</div>}
+        {fieldErrors.lozinka && <div className="text-red-500">{fieldErrors.lozinka}</div>}
         {error && <div className="text-red-500">{error}</div>}
         <Button type="submit" variant="default" size="default">{t("login.submit")}</Button>
       </form>

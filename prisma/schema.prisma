@@ -13,42 +13,43 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id      Int     @id @default(autoincrement())
-  email   String  @unique
-  name    String?
-  password String?
-  role    String   @default("admin")
-}
-model Room {
-  id          Int       @id @default(autoincrement())
-  number      String    @unique
-  type        String
-  capacity    Int
-  price       Float
-  reservations Reservation[]
-}
-
-model Guest {
-  id           Int       @id @default(autoincrement())
-  firstName    String
-  lastName     String
-  email        String    @unique
-  phone        String?
-  reservations Reservation[]
-}
-
-model Reservation {
+model Korisnik {
   id        Int      @id @default(autoincrement())
-  room      Room     @relation(fields: [roomId], references: [id])
-  roomId    Int
-  guest     Guest    @relation(fields: [guestId], references: [id])
-  guestId   Int
-  checkIn   DateTime
-  checkOut  DateTime
-  status    String   // npr. "pending", "confirmed", "cancelled"
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  email     String   @unique
+  ime       String?
+  lozinka   String?
+  uloga     String   @default("admin")
+}
+
+model Soba {
+  id           Int         @id @default(autoincrement())
+  broj         String      @unique
+  tip          String
+  kapacitet    Int
+  cena         Float
+  rezervacije  Rezervacija[]
+}
+
+model Gost {
+  id           Int         @id @default(autoincrement())
+  ime          String
+  prezime      String
+  email        String      @unique
+  telefon      String?
+  rezervacije  Rezervacija[]
+}
+
+model Rezervacija {
+  id         Int       @id @default(autoincrement())
+  soba       Soba      @relation(fields: [sobaId], references: [id])
+  sobaId     Int
+  gost       Gost      @relation(fields: [gostId], references: [id])
+  gostId     Int
+  prijava    DateTime
+  odjava     DateTime
+  status     String    // npr. "na čekanju", "potvrđeno", "otkazano"
+  kreirano   DateTime  @default(now())
+  azurirano  DateTime  @updatedAt
 }
 
 

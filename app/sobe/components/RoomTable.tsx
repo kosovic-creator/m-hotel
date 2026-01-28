@@ -1,27 +1,27 @@
 'use client';
 
-import { deleteRoom } from "@/actions/room";
+import { obrisiSobu } from "@/actions/soba";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-type Room = {
+type Soba = {
   id: number;
-  number: string;
-  type: string;
-  capacity: number;
-  price: number;
+  broj: string;
+  tip: string;
+  kapacitet: number;
+  cena: number;
 };
 
-export default function RoomTable({ rooms }: { rooms: Room[] }) {
+export default function RoomTable({ sobe }: { sobe: Soba[] }) {
   const { i18n } = useTranslation();
-  const { t } = useTranslation("rooms");
+  const { t } = useTranslation("sobe");
   return (
     <div>
       <div className="mb-4 ">
-        <Link href="/rooms/add" passHref>
+        <Link href="/sobe/dodaj" passHref>
           <Button asChild variant="default">
             <span>{t("add")}</span>
           </Button>
@@ -37,19 +37,19 @@ export default function RoomTable({ rooms }: { rooms: Room[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rooms.map(room => (
-            <TableRow key={room.id}>
-              <TableCell>{room.number}</TableCell>
-              <TableCell>{room.type}</TableCell>
-              <TableCell>{room.capacity}</TableCell>
-              <TableCell>{room.price}</TableCell>
+          {sobe.map(soba => (
+            <TableRow key={soba.id}>
+              <TableCell>{soba.broj}</TableCell>
+              <TableCell>{soba.tip}</TableCell>
+              <TableCell>{soba.kapacitet}</TableCell>
+              <TableCell>{soba.cena}</TableCell>
               <TableCell>
                 <div className="flex space-x-2 flex-row justify-center">
-                  <form action={deleteRoom}>
-                    <Input type="hidden" name="id" value={room.id} />
+                  <form action={obrisiSobu}>
+                    <Input type="hidden" name="id" value={soba.id} />
                     <Button variant="destructive" size="sm" className="ml-2">{t("removeRoom")}</Button>
                   </form>
-                  <Link href={`/rooms/edit?roomId=${room.id}&lang=${i18n.language}`}>
+                  <Link href={`/sobe/izmeni?sobaId=${soba.id}&lang=${i18n.language}`}>
                     <Button variant="secondary" type="button">{t("editRoom")}</Button>
                   </Link>
                 </div>

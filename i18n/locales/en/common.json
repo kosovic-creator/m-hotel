@@ -8,5 +8,6 @@
   "register": "Register",
   "add_to_cart": "Add to cart",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "welcome": "Welcome to M-HOTEL Admin Panel"
 }
