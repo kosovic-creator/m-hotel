@@ -16,7 +16,7 @@ export default function Navbar() {
   const { t, i18n } = useTranslation("navbar");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleChangeLanguage = (lng: "en" | "sr") => {
+  const handleChangeLanguage = (lng: "en" | "mn") => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("lang", lng);
     router.push(`${pathname}?${params.toString()}`);
@@ -64,10 +64,15 @@ export default function Navbar() {
 
       {/* Desktop nav */}
       <div className="hidden sm:flex items-center gap-4">
+        {/* Prikaz imena korisnika ako je prijavljen */}
+        {session?.user && (
+          <span className="text-gray-900 font-semibold mr-2">
+            {session.user.name || session.user.email}
+          </span>
+        )}
         {/* Auth buttons: show only one, with icon */}
         {session?.user ? (
           <>
-            <span className="text-gray-700">{session.user.name || session.user.email}</span>
             <Button variant="ghost" onClick={handleSignOut} className="flex items-center gap-2">
               <FaSignOutAlt />
               {t("logout")}
@@ -89,8 +94,8 @@ export default function Navbar() {
         </Button>
         <Button
           variant="ghost"
-          onClick={() => handleChangeLanguage("sr")}
-          className={`flex items-center gap-1 ${i18n.language === "sr" ? "font-bold underline" : ""}`}
+          onClick={() => handleChangeLanguage("mn")}
+          className={`flex items-center gap-1 ${i18n.language === "mn" ? "font-bold underline" : ""}`}
         >
           <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
         </Button>
@@ -126,9 +131,9 @@ export default function Navbar() {
             </Button>
             <Button
               variant="ghost"
-              onClick={() => handleChangeLanguage("sr")}
-              className={`flex items-center gap-1 ${i18n.language === "sr" ? "font-bold underline" : ""}`}
-              disabled={i18n.language === "sr"}
+              onClick={() => handleChangeLanguage("mn")}
+              className={`flex items-center gap-1 ${i18n.language === "mn" ? "font-bold underline" : ""}`}
+              disabled={i18n.language === "mn"}
             >
               <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
             </Button>

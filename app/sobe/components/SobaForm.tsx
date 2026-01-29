@@ -83,7 +83,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
 
     return (
         <form onSubmit={handleSubmit} className="mb-8 flex gap-4 flex-col max-w-md mt-4 w-full">
-            <input type="hidden" name="lang" value={lang || 'sr'} />
+            <input type="hidden" name="lang" value={lang || 'mn'} />
             <input type="hidden" name="id" value={initialData?.id ?? ''} />
             <Input
                 name="broj"

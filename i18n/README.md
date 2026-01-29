@@ -22,15 +22,15 @@ i18n/
     │   ├── porudzbine.json     # Porudžbine
     │   ├── notFound.json       # 404 strana
     │   └── placanje.json       # Plaćanje
-    └── sr/                      # Srpski prevodi (isti fajlovi)
+    └── mn/                      # mnpski prevodi (isti fajlovi)
 ```
 
 ## 🔧 Configuration
 
 The main configuration is in `config.ts` which:
 - **Jednostavno** - bez komplikovanih konfiguracija
-- Podržava `en` (English) i `sr` (Serbian)
-- Srpski je glavni jezik
+- Podržava `en` (English) i `mn` (Serbian)
+- mnpski je glavni jezik
 - Organizovano po namespace-ovima (delovima aplikacije)
 
 ## 📝 Usage in Components
@@ -53,7 +53,7 @@ function MyComponent() {
 
 ## 🌍 Supported Languages
 
-- **Serbian (sr)** - Default language
+- **Serbian (mn)** - Default language
 - **English (en)** - Secondary language
 
 ## 📋 Available Namespaces
@@ -95,8 +95,8 @@ function MyComponent() {
 ## 🎯 Migration from Old Structure
 
 The old structure had all translation files in the root `i18n/` folder:
-- `en.json`, `sr.json` → moved to `locales/en/common.json`, `locales/sr/common.json`
-- `*_en.json`, `*_sr.json` → moved to `locales/en/*.json`, `locales/sr/*.json`
+- `en.json`, `mn.json` → moved to `locales/en/common.json`, `locales/mn/common.json`
+- `*_en.json`, `*_mn.json` → moved to `locales/en/*.json`, `locales/mn/*.json`
 - Combined `login`, `logout`, `register` → `auth.json`
 
 This new structure provides better maintainability and scalability for the application.

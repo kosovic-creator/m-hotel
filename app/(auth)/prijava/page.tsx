@@ -75,8 +75,8 @@ export default function SignInPage() {
         />
         {fieldErrors.lozinka && <div className="text-red-500">{fieldErrors.lozinka}</div>}
         <div className="flex items-center justify-between">
-          <label className="flex items-center gap-2 text-sm">
-            <Checkbox checked={remember} onChange={e => setRemember(e.target.checked)} />
+          <label className="flex items-center gap-2 text-sm ">
+            <Checkbox  checked={remember} onChange={e => setRemember(e.target.checked)} className="accent-black" />
             {t("login.rememberMe") || "Zapamti prijavu"}
           </label>
           <Link href="/auth/registracija" className="text-blue-600 hover:underline text-sm">

@@ -33,7 +33,7 @@ export async function dodajSobu(formData: FormData) {
   const tip = formData.get('tip') as string;
   const kapacitet = Number(formData.get('kapacitet'));
   const cena = Number(formData.get('cena'));
-  const lang = (formData.get('lang') as string) || 'sr';
+  const lang = (formData.get('lang') as string) || 'mn';
 
   try {
     await prisma.soba.create({
@@ -59,7 +59,7 @@ export async function dodajSobu(formData: FormData) {
 
 export async function obrisiSobu(formData: FormData) {
   const id = Number(formData.get('id'));
-  const lang = (formData.get('lang') as string) || 'sr';
+  const lang = (formData.get('lang') as string) || 'mn';
   try {
     const soba = await prisma.soba.findUnique({ where: { id } });
     if (!soba) {
@@ -87,7 +87,7 @@ export const azurirajSobu = async (formData: FormData) => {
   const tip = formData.get('tip') as string | null;
   const kapacitet = formData.get('kapacitet') ? Number(formData.get('kapacitet')) : null;
   const cena = formData.get('cena') ? Number(formData.get('cena')) : null;
-  const lang = (formData.get('lang') as string) || 'sr';
+  const lang = (formData.get('lang') as string) || 'mn';
 
   // Priprema objekta za ažuriranje
   const updatedDetails: { broj?: string; tip?: string; kapacitet?: number; cena?: number } = {};

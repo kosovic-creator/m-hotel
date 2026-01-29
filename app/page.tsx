@@ -3,7 +3,7 @@ import { getLocaleMessages } from "@/i18n/i18n";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
    const params = await searchParams;
-    const lang: "en" | "sr" = params?.lang === "sr" ? "sr" : "en";
+  const lang: "en" | "mn" = params?.lang === "mn" ? "mn" : "en";
     const t = getLocaleMessages(lang, 'common');
   return (
     <>

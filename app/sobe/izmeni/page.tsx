@@ -9,7 +9,7 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<{
         ? await searchParams
         : searchParams;
 
-    const lang: "en" | "sr" = params.lang === "sr" ? "sr" : "en";
+    const lang: "en" | "mn" = params.lang === "mn" ? "mn" : "en";
     const t = getLocaleMessages(lang, 'sobe');
     const id = Number(params.sobaId);
 
@@ -27,7 +27,7 @@ export default async function IdPage({ searchParams }: { searchParams: Promise<{
         <>
             <div className="flex flex-col items-center justify-center min-h-screen px-2 sm:px-0 bg-gray-50">
                 <div className="w-full max-w-md bg-white rounded-lg shadow-md p-4 sm:p-8 mt-8">
-                   
+
                     <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">{t.edit}</h1>
                     <SobaForm
                         action={azurirajSobu}

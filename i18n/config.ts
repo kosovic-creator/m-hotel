@@ -5,11 +5,11 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import enCommon from './locales/en/common.json';
 import enAuth from './locales/en/auth.json';
-import srCommon from './locales/sr/common.json';
-import srAuth from './locales/sr/auth.json';
+import mnCommon from './locales/mn/common.json';
+import mnAuth from './locales/mn/auth.json';
 import enSobe from './locales/en/sobe.json';
-import srSobe from './locales/sr/sobe.json';
-import srNavbar from './locales/sr/navbar.json';
+import mnSobe from './locales/mn/sobe.json';
+import mnNavbar from './locales/mn/navbar.json';
 import enNavbar from './locales/en/navbar.json';
 
 const resources = {
@@ -19,11 +19,11 @@ const resources = {
     sobe: enSobe,
     navbar: enNavbar,
   },
-  sr: {
-    common: srCommon,
-    auth: srAuth,
-    sobe: srSobe,
-    navbar: srNavbar,
+  mn: {
+    common: mnCommon,
+    auth: mnAuth,
+    sobe: mnSobe,
+    navbar: mnNavbar,
   },
 };
 
@@ -32,7 +32,7 @@ if (!i18n.isInitialized) {
     .use(initReactI18next)
     .init({
       fallbackLng: 'en',
-      supportedLngs: ['en', 'sr'],
+      supportedLngs: ['en', 'mn'],
       debug: process.env.NODE_ENV === 'development',
       ns: ['common', 'auth', 'sobe', 'navbar'],
       defaultNS: 'common',

@@ -12,7 +12,7 @@ export default async function SobeStrana({ searchParams }: { searchParams: Promi
   // DEBUG: Prikaz svih query parametara
   // eslint-disable-next-line no-console
   console.log('SOBE PAGE PARAMS:', params);
-  const lang: "en" | "sr" = params?.lang === "sr" ? "sr" : "en";
+  const lang: "en" | "mn" = params?.lang === "mn" ? "mn" : "en";
   const t = getLocaleMessages(lang, 'sobe');
   const successParam = params.success;
   const errorParam = params.error;
