@@ -27,5 +27,9 @@
   "exists": "Room with that number already exists",
   "error": "Error adding room",
   "updated": "Record has been updated",
-  "deleted": "Room has been deleted"
+  "deleted": "Room has been deleted",
+  "broj_error": "Room number is required",
+  "tip_error": "Room type is required",
+  "kapacitet_error": "Capacity must be greater than 0",
+  "cena_error": "Price must be greater than or equal to 0"
 }

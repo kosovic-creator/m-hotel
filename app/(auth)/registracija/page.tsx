@@ -10,15 +10,16 @@ export default function RegisterPage() {
   const [ime, setIme] = useState("");
   const [email, setEmail] = useState("");
   const [lozinka, setLozinka] = useState("");
+  const [potvrdaLozinke, setPotvrdaLozinke] = useState("");
   const [error, setError] = useState("");
-  const [fieldErrors, setFieldErrors] = useState<{ ime?: string; email?: string; lozinka?: string }>({});
+  const [fieldErrors, setFieldErrors] = useState<{ ime?: string; email?: string; lozinka?: string; potvrdaLozinke?: string }>({});
   const router = useRouter();
   const { t } = useTranslation("auth");
-  const validateField = (field: "ime" | "email" | "lozinka", value: string) => {
-    const result = registerSchema.safeParse({ ime, email, lozinka, [field]: value });
+  const validateField = (field: "ime" | "email" | "lozinka" | "potvrdaLozinke", value: string) => {
+    const result = registerSchema(t).safeParse({ ime, email, lozinka, potvrdaLozinke, [field]: value });
     if (!result.success) {
-      const errors = result.error.flatten().fieldErrors;
-      setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
+      const errors: { ime?: string[]; email?: string[]; lozinka?: string[]; potvrdaLozinke?: string[] } = result.error.flatten().fieldErrors;
+      setFieldErrors(prev => ({ ...prev, [field]: errors[field as keyof typeof errors]?.[0] }));
     } else {
       setFieldErrors(prev => ({ ...prev, [field]: undefined }));
     }
@@ -27,21 +28,26 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = registerSchema.safeParse({ ime, email, lozinka });
+    const result = registerSchema(t).safeParse({ ime, email, lozinka, potvrdaLozinke });
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;
       setFieldErrors({
         ime: errors.ime?.[0],
         email: errors.email?.[0],
         lozinka: errors.lozinka?.[0],
+        potvrdaLozinke: errors.potvrdaLozinke?.[0],
       });
+      return;
+    }
+    if (lozinka !== potvrdaLozinke) {
+      setFieldErrors(prev => ({ ...prev, potvrdaLozinke: "Lozinke se ne poklapaju" }));
       return;
     }
     try {
       const res = await fetch("/api/auth/registracija", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ime, email, lozinka, uloga: "admin" }), // ili druga uloga po potrebi
+        body: JSON.stringify({ ime, email, lozinka, potvrdaLozinke }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -80,7 +86,7 @@ export default function RegisterPage() {
         {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder={t("register.lozinka")}
+          placeholder={t("register.password")}
           value={lozinka}
           onChange={e => setLozinka(e.target.value)}
           onBlur={e => validateField("lozinka", e.target.value)}
@@ -88,6 +94,16 @@ export default function RegisterPage() {
           required
         />
         {fieldErrors.lozinka && <div className="text-red-500">{fieldErrors.lozinka}</div>}
+        <Input
+          type="password"
+          placeholder={t("register.passwordConfirmation") || "Potvrda lozinke"}
+          value={potvrdaLozinke}
+          onChange={e => setPotvrdaLozinke(e.target.value)}
+          onBlur={e => validateField("potvrdaLozinke", e.target.value)}
+          className="w-full border p-2 rounded"
+          required
+        />
+        {fieldErrors.potvrdaLozinke && <div className="text-red-500">{fieldErrors.potvrdaLozinke}</div>}
         {error && <div className="text-red-500">{error}</div>}
 
         <div className="flex flex-col sm:flex-row sm:gap-x-0 gap-y-3 mt-8 pt-6 border-t">

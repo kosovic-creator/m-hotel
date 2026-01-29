@@ -43,7 +43,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             kapacitet: Number(data.kapacitet),
             cena: Number(data.cena)
         };
-        const result = sobaSchema.safeParse(parsedData);
+        const result = sobaSchema(t).safeParse(parsedData);
         if (!result.success) {
             const errors = result.error.flatten().fieldErrors;
             setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
@@ -60,7 +60,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             kapacitet: Number(kapacitet),
             cena: Number(cena)
         };
-        const result = sobaSchema.safeParse(parsedData);
+        const result = sobaSchema(t).safeParse(parsedData);
         if (!result.success) {
             const errors = result.error.flatten().fieldErrors;
             setFieldErrors({

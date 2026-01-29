@@ -19,7 +19,7 @@ export default function SignInPage() {
   const { t } = useTranslation("auth");
 
   const validateField = (field: "email" | "lozinka", value: string) => {
-    const result = loginSchema.safeParse({ email, lozinka, [field]: value });
+    const result = loginSchema(t).safeParse({ email, lozinka, [field]: value });
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;
       setFieldErrors(prev => ({ ...prev, [field]: errors[field]?.[0] }));
@@ -31,7 +31,7 @@ export default function SignInPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    const result = loginSchema.safeParse({ email, lozinka });
+    const result = loginSchema(t).safeParse({ email, lozinka });
     if (!result.success) {
       const errors = result.error.flatten().fieldErrors;
       setFieldErrors({
@@ -79,7 +79,7 @@ export default function SignInPage() {
             <Checkbox  checked={remember} onChange={e => setRemember(e.target.checked)} className="accent-black" />
             {t("login.rememberMe") || "Zapamti prijavu"}
           </label>
-          <Link href="/auth/registracija" className="text-blue-600 hover:underline text-sm">
+          <Link href="/registracija" className="text-blue-600 hover:underline text-sm">
             {t("login.noAccount") || "Nemate nalog? Registrujte se"}
           </Link>
         </div>
