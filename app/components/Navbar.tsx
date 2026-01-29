@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars } from "react-icons/fa";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 export default function Navbar() {
   const { data: session } = useSession();

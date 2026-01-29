@@ -54,8 +54,8 @@ export default function RegisterPage() {
         setError(data.error || "Greška pri registraciji");
         return;
       }
-      router.push("/auth/prijava");
-    } catch (err) {
+      router.push("/authprijava");
+    } catch {
       setError("Greška na serveru");
     }
   };
