@@ -9,9 +9,6 @@ export const metadata: Metadata = {
 export default async function SobeStrana({ searchParams }: { searchParams: Promise<{ lang?: string;[key: string]: string | undefined }> }) {
   const sobe = await ucitajSobe();
   const params = await searchParams;
-  // DEBUG: Prikaz svih query parametara
-  // eslint-disable-next-line no-console
-  console.log('SOBE PAGE PARAMS:', params);
   const lang: "en" | "mn" = params?.lang === "mn" ? "mn" : "en";
   const t = getLocaleMessages(lang, 'sobe');
   const successParam = params.success;
