@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import PotvrdaBrisanjaModal from "./PorvrdaBrisanjaModal";
+import PotvrdaBrisanjaModal from "@/app/components/PorvrdaBrisanjaModal";
 
 type Soba = {
   id: number;

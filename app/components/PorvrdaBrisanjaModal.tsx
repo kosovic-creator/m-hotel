@@ -3,21 +3,21 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-interface ConfirmDeleteModalProps {
+interface PotvrdaBrisanjaModalProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
 }
 
-export default function ConfirmDeleteModal({ open, onCancel, onConfirm }: ConfirmDeleteModalProps) {
-  const { t } = useTranslation("sobe");
+export default function PotvrdaBrisanjaModal({ open, onCancel, onConfirm }: PotvrdaBrisanjaModalProps) {
+  const { t } = useTranslation("common");
 
   if (!open) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-sm">
-        <h2 className="text-lg font-semibold mb-4">{t("delete_confirm")}</h2>
+        <h2 className="mb-4">{t("delete_confirmation")}</h2>
         <div className="flex justify-end gap-2">
           <button
             onClick={onCancel}

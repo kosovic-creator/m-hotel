@@ -11,5 +11,10 @@
   "delete": "Obriši",
   "welcome": "Dobrodošli u M-HOTEL Admin Panel",
   "not_found_message": "Stranica koju tražite ne postoji.",
-  "go_home": "Idi na početnu stranicu"
+  "go_home": "Idi na početnu stranicu",
+  "back": "Nazad",
+  "cancel": "Otkaži",
+  "confirm": "Potvrdi",
+  "loading": "Učitavanje...",
+  "delete_confirmation": "Da li ste sigurni da želite da obrišete ovaj zapis?"
 }
