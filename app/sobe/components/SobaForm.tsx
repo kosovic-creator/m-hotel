@@ -129,17 +129,18 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             {fieldErrors.cena && <div className="text-red-500 text-xs pl-1">{fieldErrors.cena}</div>}
             {error && <div className="text-red-500 text-xs pl-1">{error}</div>}
             <div className="flex flex-col sm:flex-row sm:gap-x-0 gap-y-3 mt-8 pt-6 border-t">
-                <Button type="submit" variant="default" className="flex-1 py-2 text-base rounded-b-none sm:rounded-r-none sm:rounded-bl-md">
-                    {mode === 'edit' ? t("edit") : t("add")}
-                </Button>
                 <Button
                     type="button"
                     variant="secondary"
-                    className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 rounded-t-none sm:rounded-l-none sm:rounded-br-md"
+                    className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 "
                     onClick={() => router.push(`/sobe?lang=${lang}`)}
                 >
                     {t("back")}
                 </Button>
+                <Button type="submit" variant="default" className="flex-1 py-2 text-base ">
+                    {mode === 'edit' ? t("edit") : t("add")}
+                </Button>
+
             </div>
 
         </form>

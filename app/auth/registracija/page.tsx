@@ -91,15 +91,19 @@ export default function RegisterPage() {
         {error && <div className="text-red-500">{error}</div>}
 
         <div className="flex flex-col sm:flex-row sm:gap-x-0 gap-y-3 mt-8 pt-6 border-t">
-          <Button type="submit" variant="default" size="default">{t("register.submit")}</Button>
+
           <Button
             type="button"
             variant="secondary"
-            className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 rounded-t-none sm:rounded-l-none sm:rounded-br-md"
+            className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 "
             onClick={() => router.push(`/`)}
           >
             {t("back")}
           </Button>
+          <Button type="submit" variant="default" size="default" className="flex-1 ">
+            {t("register.submit")}
+          </Button>
+
         </div>
       </form>
     </div>

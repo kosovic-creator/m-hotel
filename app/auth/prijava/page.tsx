@@ -84,7 +84,7 @@ export default function SignInPage() {
           </Link>
         </div>
         {error && <div className="text-red-500">{error}</div>}
-        <Button type="submit" variant="default" size="default">{t("login.submit")}</Button>
+        <Button type="submit" variant="default" size="default" className="w-full">{t("login.submit")}</Button>
       </form>
     </div>
   );
