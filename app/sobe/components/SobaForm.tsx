@@ -7,17 +7,17 @@ import { sobaSchema } from "@/app/validation/sobeSchema";
 import { useRouter } from "next/navigation";
 
 
-type RoomData = { id?: string; broj: string; tip: string; kapacitet: number; cena: number };
+type SobaData = { id?: string; broj: string; tip: string; kapacitet: number; cena: number };
 
 
-interface RoomFormProps {
+interface SobaFormProps {
     action: (formData: FormData) => Promise<void>;
-    initialData?: Partial<RoomData>;
-    mode?: 'add' | 'edit';
+    initialData?: Partial<SobaData>;
+    mode?: 'dodaj' | 'izmeni';
     lang?: string; // dodaj ovo
 }
 
-export default function RoomForm({ action, initialData, mode, lang }: RoomFormProps) {
+export default function SobaForm({ action, initialData, mode, lang }: SobaFormProps) {
 
 
     const { t } = useTranslation("sobe");
@@ -29,8 +29,8 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
     const [fieldErrors, setFieldErrors] = useState<{ broj?: string; tip?: string; kapacitet?: string; cena?: string }>({});
     const [error, setError] = useState("");
 
-    type RoomField = "broj" | "tip" | "kapacitet" | "cena";
-    const validateField = (field: RoomField, value: string) => {
+    type SobaField = "broj" | "tip" | "kapacitet" | "cena";
+    const validateField = (field: SobaField, value: string) => {
         const data = {
             broj,
             tip,
@@ -138,7 +138,7 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
                     {t("back")}
                 </Button>
                 <Button type="submit" variant="default" className="flex-1 py-2 text-base ">
-                    {mode === 'edit' ? t("edit") : t("add")}
+                    {mode === 'izmeni' ? t("edit") : t("add")}
                 </Button>
 
             </div>
