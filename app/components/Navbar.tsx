@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-
+import { FaShoppingCart, FaSignInAlt, FaSignOutAlt, FaBars } from "react-icons/fa";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -26,11 +26,11 @@ export default function Navbar() {
 
   const handleprijava = () => {
     setMenuOpen(false);
-    router.push(`/auth/prijava?lang=${i18n.language}`);
+    router.push(`/prijava?lang=${i18n.language}`);
   };
   const handleSignOut = () => {
     setMenuOpen(false);
-    signOut({ callbackUrl: `/auth/prijava?lang=${i18n.language}` });
+    signOut({ callbackUrl: `/prijava?lang=${i18n.language}` });
   };
 
   return (
@@ -64,29 +64,35 @@ export default function Navbar() {
 
       {/* Desktop nav */}
       <div className="hidden sm:flex items-center gap-4">
+        {/* Auth buttons: show only one, with icon */}
         {session?.user ? (
           <>
             <span className="text-gray-700">{session.user.name || session.user.email}</span>
-            <Button variant="outline" onClick={handleSignOut}>
+            <Button variant="ghost" onClick={handleSignOut} className="flex items-center gap-2">
+              <FaSignOutAlt />
               {t("logout")}
             </Button>
           </>
         ) : (
-          <Button variant="default" onClick={handleprijava}>
+            <Button variant="ghost" onClick={handleprijava} className="flex items-center gap-2">
+              <FaSignInAlt />
             {t("login")}
           </Button>
         )}
+        {/* Language buttons: both ghost, with icon, highlight selected */}
         <Button
+          variant="ghost"
           onClick={() => handleChangeLanguage("en")}
-          className={i18n.language === "en" ? "font-bold underline" : ""}
+          className={`flex items-center gap-1 ${i18n.language === "en" ? "font-bold underline" : ""}`}
         >
-          EN
+          <span role="img" aria-label="English">🇬🇧</span> EN
         </Button>
         <Button
+          variant="ghost"
           onClick={() => handleChangeLanguage("sr")}
-          className={i18n.language === "sr" ? "font-bold underline" : ""}
+          className={`flex items-center gap-1 ${i18n.language === "sr" ? "font-bold underline" : ""}`}
         >
-          SR
+          <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
         </Button>
       </div>
 
@@ -96,30 +102,35 @@ export default function Navbar() {
           <Button variant="ghost" size="sm" asChild onClick={() => setMenuOpen(false)}>
             <Link href={`/sobe?lang=${i18n.language}`}>{t("rooms")}</Link>
           </Button>
+          {/* Auth buttons: show only one, with icon */}
           {session?.user ? (
-            <>
-              <span className="text-gray-700 mb-2">{session.user.name || session.user.email}</span>
-              <Button variant="outline" onClick={handleSignOut} className="w-full">
-                {t("logout")}
-              </Button>
-            </>
+            <Button variant="ghost" onClick={handleSignOut} className="w-full flex items-center gap-2">
+              <FaSignOutAlt />
+              {t("logout")}
+            </Button>
           ) : (
-            <Button variant="default" onClick={handleprijava} className="w-full">
+              <Button variant="ghost" onClick={handleprijava} className="w-full flex items-center gap-2">
+                <FaSignInAlt />
               {t("login")}
             </Button>
           )}
+          {/* Language buttons: both ghost, with icon, highlight selected */}
           <div className="flex gap-2 mt-2">
             <Button
+              variant="ghost"
               onClick={() => handleChangeLanguage("en")}
-              className={i18n.language === "en" ? "font-bold underline" : ""}
+              className={`flex items-center gap-1 ${i18n.language === "en" ? "font-bold underline" : ""}`}
+              disabled={i18n.language === "en"}
             >
-              EN
+              <span role="img" aria-label="English">🇬🇧</span> EN
             </Button>
             <Button
+              variant="ghost"
               onClick={() => handleChangeLanguage("sr")}
-              className={i18n.language === "sr" ? "font-bold underline" : ""}
+              className={`flex items-center gap-1 ${i18n.language === "sr" ? "font-bold underline" : ""}`}
+              disabled={i18n.language === "sr"}
             >
-              SR
+              <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
             </Button>
           </div>
         </div>

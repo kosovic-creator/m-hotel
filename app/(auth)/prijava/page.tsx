@@ -66,7 +66,7 @@ export default function SignInPage() {
         {fieldErrors.email && <div className="text-red-500">{fieldErrors.email}</div>}
         <Input
           type="password"
-          placeholder={t("login.lozinka")}
+          placeholder={t("login.password")}
           value={lozinka}
           onChange={e => setLozinka(e.target.value)}
           onBlur={e => validateField("lozinka", e.target.value)}
