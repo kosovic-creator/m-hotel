@@ -30,7 +30,9 @@ export default function Navbar() {
   };
   const handleSignOut = () => {
     setMenuOpen(false);
-    signOut({ callbackUrl: `/prijava?lang=${i18n.language}` });
+    setTimeout(() => {
+      signOut({ callbackUrl: `/prijava?lang=${i18n.language}` });
+    }, 100);
   };
 
   return (
@@ -51,6 +53,68 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile nav sidebar */}
+      <div
+        className={`
+          fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-40 transform
+          transition-transform duration-300 ease-in-out
+          ${menuOpen ? "translate-x-0" : "-translate-x-full"}
+          sm:hidden
+        `}
+        style={{ willChange: "transform" }}
+      >
+        <div className="flex flex-col h-full p-4">
+          {/* Close button */}
+          <button
+            className="self-end mb-4 text-2xl"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            &times;
+          </button>
+          <Button variant="ghost" size="sm" asChild onClick={() => setMenuOpen(false)}>
+            <Link href={`/sobe?lang=${i18n.language}`}>{t("rooms")}</Link>
+          </Button>
+          {/* Auth buttons: show only one, with icon */}
+          {session?.user ? (
+            <Button variant="ghost" onClick={handleSignOut} className="w-full flex items-center gap-2 mt-2">
+              <FaSignOutAlt />
+              {t("logout")}
+            </Button>
+          ) : (
+              <Button variant="ghost" onClick={handleprijava} className="w-full flex items-center gap-2 mt-2">
+              <FaSignInAlt />
+              {t("login")}
+            </Button>
+          )}
+          {/* Language buttons */}
+          <div className="flex gap-2 mt-4">
+            <Button
+              variant="ghost"
+              onClick={() => handleChangeLanguage("en")}
+              className={`flex items-center gap-1 ${i18n.language === "en" ? "font-bold underline" : ""}`}
+              disabled={i18n.language === "en"}
+            >
+              <span role="img" aria-label="English">🇬🇧</span> EN
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => handleChangeLanguage("mn")}
+              className={`flex items-center gap-1 ${i18n.language === "mn" ? "font-bold underline" : ""}`}
+              disabled={i18n.language === "mn"}
+            >
+              <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
+            </Button>
+          </div>
+        </div>
+      </div>
+      {/* Overlay for sidebar */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-transparent backdrop-blur-sm z-30 sm:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
       {/* Hamburger icon for mobile */}
       <button
         className="sm:hidden flex flex-col justify-center items-center w-10 h-10 rounded focus:outline-none focus:ring-2 focus:ring-primary"
@@ -81,8 +145,8 @@ export default function Navbar() {
         ) : (
             <Button variant="ghost" onClick={handleprijava} className="flex items-center gap-2">
               <FaSignInAlt />
-            {t("login")}
-          </Button>
+              {t("login")}
+            </Button>
         )}
         {/* Language buttons: both ghost, with icon, highlight selected */}
         <Button
@@ -101,45 +165,7 @@ export default function Navbar() {
         </Button>
       </div>
 
-      {/* Mobile nav dropdown */}
-      {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-start px-4 py-3 gap-2 sm:hidden animate-fade-in z-30">
-          <Button variant="ghost" size="sm" asChild onClick={() => setMenuOpen(false)}>
-            <Link href={`/sobe?lang=${i18n.language}`}>{t("rooms")}</Link>
-          </Button>
-          {/* Auth buttons: show only one, with icon */}
-          {session?.user ? (
-            <Button variant="ghost" onClick={handleSignOut} className="w-full flex items-center gap-2">
-              <FaSignOutAlt />
-              {t("logout")}
-            </Button>
-          ) : (
-              <Button variant="ghost" onClick={handleprijava} className="w-full flex items-center gap-2">
-                <FaSignInAlt />
-              {t("login")}
-            </Button>
-          )}
-          {/* Language buttons: both ghost, with icon, highlight selected */}
-          <div className="flex gap-2 mt-2">
-            <Button
-              variant="ghost"
-              onClick={() => handleChangeLanguage("en")}
-              className={`flex items-center gap-1 ${i18n.language === "en" ? "font-bold underline" : ""}`}
-              disabled={i18n.language === "en"}
-            >
-              <span role="img" aria-label="English">🇬🇧</span> EN
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => handleChangeLanguage("mn")}
-              className={`flex items-center gap-1 ${i18n.language === "mn" ? "font-bold underline" : ""}`}
-              disabled={i18n.language === "mn"}
-            >
-              <span role="img" aria-label="Montenegrin">🇲🇪</span> MN
-            </Button>
-          </div>
-        </div>
-      )}
+
     </nav>
   );
 }
