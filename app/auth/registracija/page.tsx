@@ -89,7 +89,18 @@ export default function RegisterPage() {
         />
         {fieldErrors.lozinka && <div className="text-red-500">{fieldErrors.lozinka}</div>}
         {error && <div className="text-red-500">{error}</div>}
-        <Button type="submit" variant="default" size="default">{t("register.submit")}</Button>
+
+        <div className="flex flex-col sm:flex-row sm:gap-x-0 gap-y-3 mt-8 pt-6 border-t">
+          <Button type="submit" variant="default" size="default">{t("register.submit")}</Button>
+          <Button
+            type="button"
+            variant="secondary"
+            className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 rounded-t-none sm:rounded-l-none sm:rounded-br-md"
+            onClick={() => router.push(`/`)}
+          >
+            {t("back")}
+          </Button>
+        </div>
       </form>
     </div>
   );

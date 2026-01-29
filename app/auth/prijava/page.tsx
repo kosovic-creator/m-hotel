@@ -4,16 +4,19 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
 import { loginSchema } from "@/app/validation/authSchemas";
 import { useTranslation } from "react-i18next";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [lozinka, setLozinka] = useState("");
+  const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ email?: string; lozinka?: string }>({});
   const router = useRouter();
- const { t } = useTranslation("auth");
+  const { t } = useTranslation("auth");
 
   const validateField = (field: "email" | "lozinka", value: string) => {
     const result = loginSchema.safeParse({ email, lozinka, [field]: value });
@@ -37,6 +40,7 @@ export default function SignInPage() {
       });
       return;
     }
+    // Optionally handle remember me logic here (e.g., set cookie/localStorage)
     const res = await signIn("credentials", {
       email,
       lozinka,
@@ -70,6 +74,15 @@ export default function SignInPage() {
           required
         />
         {fieldErrors.lozinka && <div className="text-red-500">{fieldErrors.lozinka}</div>}
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox checked={remember} onChange={e => setRemember(e.target.checked)} />
+            {t("login.rememberMe") || "Zapamti prijavu"}
+          </label>
+          <Link href="/auth/registracija" className="text-blue-600 hover:underline text-sm">
+            {t("login.noAccount") || "Nemate nalog? Registrujte se"}
+          </Link>
+        </div>
         {error && <div className="text-red-500">{error}</div>}
         <Button type="submit" variant="default" size="default">{t("login.submit")}</Button>
       </form>

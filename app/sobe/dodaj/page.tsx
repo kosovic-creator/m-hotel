@@ -12,9 +12,7 @@ export default async function AddRoomPage({ searchParams }: { searchParams: Prom
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-2 sm:px-0 bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-4 sm:p-8 mt-8">
-        <Link className="text-gray-600 hover:text-blue-900 text-sm" href={`/sobe?lang=${lang}`}>
-          {t.back}
-        </Link>
+       
         <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center">{t.add}</h1>
         <SobaForm action={dodajSobu} mode="add" lang={lang} />
       </div>

@@ -4,9 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { sobaSchema } from "@/app/validation/sobeSchema";
+import { useRouter } from "next/navigation";
 
 
 type RoomData = { id?: string; broj: string; tip: string; kapacitet: number; cena: number };
+
 
 interface RoomFormProps {
     action: (formData: FormData) => Promise<void>;
@@ -16,7 +18,10 @@ interface RoomFormProps {
 }
 
 export default function RoomForm({ action, initialData, mode, lang }: RoomFormProps) {
+
+
     const { t } = useTranslation("sobe");
+    const router = useRouter();
     const [broj, setBroj] = useState(initialData?.broj ?? "");
     const [tip, setTip] = useState(initialData?.tip ?? "");
     const [kapacitet, setKapacitet] = useState(initialData?.kapacitet?.toString() ?? "");
@@ -123,9 +128,20 @@ export default function RoomForm({ action, initialData, mode, lang }: RoomFormPr
             />
             {fieldErrors.cena && <div className="text-red-500 text-xs pl-1">{fieldErrors.cena}</div>}
             {error && <div className="text-red-500 text-xs pl-1">{error}</div>}
-            <Button type="submit" variant="default" className="w-full py-2 text-base">
-                {mode === 'edit' ? t("edit") : t("add")}
-            </Button>
+            <div className="flex flex-col sm:flex-row sm:gap-x-0 gap-y-3 mt-8 pt-6 border-t">
+                <Button type="submit" variant="default" className="flex-1 py-2 text-base rounded-b-none sm:rounded-r-none sm:rounded-bl-md">
+                    {mode === 'edit' ? t("edit") : t("add")}
+                </Button>
+                <Button
+                    type="button"
+                    variant="secondary"
+                    className="flex-1 py-2 text-base text-gray-600 hover:text-blue-900 rounded-t-none sm:rounded-l-none sm:rounded-br-md"
+                    onClick={() => router.push(`/sobe?lang=${lang}`)}
+                >
+                    {t("back")}
+                </Button>
+            </div>
+
         </form>
     );
 }
